@@ -137,8 +137,7 @@ td.cell0, td.cell2,
 tr.cell0 > td:not(.cell1), tr.cell2 > td:not(.cell1),
 table.post td.side:not(.userlink)
 {
-	background: #dde8e4;/*#222c28;*/
-	/* 282828 */
+	background: #dde4e0;
 }
 
 
