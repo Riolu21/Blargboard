@@ -11,11 +11,11 @@ table
 	color: #000;
 }
 
-a:link, ul.dropdownMenu li a:link,
-a:visited, ul.dropdownMenu li a:visited
+a:link, ul.dropdownMenu li a:link, td.crumb-container > table a:link,
+a:visited, ul.dropdownMenu li a:visited, td.crumb-container > table a:visited
 { color: #086; }
-a:active, ul.dropdownMenu li a:active,
-a:hover, ul.dropdownMenu li a:hover
+a:active, ul.dropdownMenu li a:active, td.crumb-container > table a:active,
+a:hover, ul.dropdownMenu li a:hover, td.crumb-container > table a:hover
 { color: #0ba; text-decoration: underline; }
 
 .header0 th a:link, .header1 th a:link, table.post td.userlink a:link, table.post td.meta a:link,
@@ -190,6 +190,9 @@ table#page-container > tbody > tr:first-child > td.crumb-container > table > tbo
 table#page-container > tbody > tr:last-child > td.crumb-container > table > tbody > tr > *
 {
 	border-radius: 0;
+	background: #ddd;
+	text-shadow: none;
+	color: #000;
 }
 
 #header-sep
