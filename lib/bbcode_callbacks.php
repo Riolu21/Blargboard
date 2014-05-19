@@ -161,7 +161,7 @@ function bbcodeQuoteGeneric($contents, $arg, $text)
 	{
 		$who = htmlspecialchars($match[1]);
 		$id = (int) $match[2];
-		return "<div class='quote'><div class='quoteheader'><a href=\"".actionLink("post", $id)."\">$text $who</a></div><div class='quotecontent'>$contents</div></div>";
+		return "<div class='quote'><div class='quoteheader'><a href=\"".htmlentities(actionLink("post", $id))."\">$text $who</a></div><div class='quotecontent'>$contents</div></div>";
 	}
 	else
 	{

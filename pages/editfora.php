@@ -415,7 +415,7 @@ function WriteForumEditContents($fid)
 	}
 
 	echo "
-	<form method=\"post\" id=\"forumform\" action=\"".actionLink("editfora")."\">
+	<form method=\"post\" id=\"forumform\" action=\"".htmlentities(actionLink("editfora"))."\">
 	<input type=\"hidden\" name=\"key\" value=\"".$loguser['token']."\">
 	<input type=\"hidden\" name=\"id\" value=\"$fid\">";
 	
@@ -493,7 +493,7 @@ function WriteCategoryEditContents($cid)
 	}
 
 	echo "
-	<form method=\"post\" id=\"forumform\" action=\"".actionLink("editfora")."\">
+	<form method=\"post\" id=\"forumform\" action=\"".htmlentities(actionLink("editfora"))."\">
 	<input type=\"hidden\" name=\"key\" value=\"".$loguser["token"]."\">
 	<input type=\"hidden\" name=\"id\" value=\"$cid\">";
 	

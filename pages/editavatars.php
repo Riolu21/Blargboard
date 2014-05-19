@@ -112,7 +112,7 @@ while($mood = Fetch($rMoods))
 	$row['avatar'] = "<img src=\"".DATA_URL."avatars/{$loguserid}_{$mood['mid']}\" alt=\"\">";
 	
 	$row['field'] = "
-				<form method=\"post\" action=\"".actionLink("editavatars")."\">
+				<form method=\"post\" action=\"".htmlentities(actionLink("editavatars"))."\">
 					<input type=\"hidden\" name=\"mid\" value=\"{$mood['mid']}\">
 					<input type=\"text\" id=\"name{$mood['mid']}\" name=\"name\" size=80 maxlength=60 value=\"".htmlspecialchars($mood['name'])."\"><br>
 					<input type=\"submit\" name=\"actionrename\" value=\"".__("Rename")."\">
@@ -124,7 +124,7 @@ while($mood = Fetch($rMoods))
 }
 
 $newField = "
-				<form method=\"post\" action=\"".actionLink("editavatars")."\" enctype=\"multipart/form-data\">
+				<form method=\"post\" action=\"".htmlentities(actionLink("editavatars"))."\" enctype=\"multipart/form-data\">
 					".__("Name:")." <input type=\"text\" id=\"newName\" name=\"name\" size=80 maxlength=60><br>
 					".__("Image:")." <input type=\"file\" id=\"pic\" name=\"picture\"><br>
 					<input type=\"submit\" name=\"actionadd\" value=\"".__("Add")."\">

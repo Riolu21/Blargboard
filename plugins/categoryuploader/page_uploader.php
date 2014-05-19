@@ -53,7 +53,7 @@ if($_GET['action'] == "uploadform")
 	<script type=\"text/javascript\">
 		window.addEventListener(\"load\", function() { hookUploadCheck(\"newfile\", 1, {1}) }, false);
 	</script>
-	<form action=\"".actionLink("uploader")."\" method=\"post\" enctype=\"multipart/form-data\">
+	<form action=\"".htmlentities(actionLink("uploader"))."\" method=\"post\" enctype=\"multipart/form-data\">
 		<input type='hidden' name='cat' value='${_GET["cat"]}'>
 		<table class=\"outline margin\">
 			<tr class=\"header0\">

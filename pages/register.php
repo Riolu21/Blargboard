@@ -174,7 +174,7 @@ $fields = array(
 	'btnRegister' => "<input type=\"submit\" name=\"register\" value=\"".__("Register")."\">",
 );
 
-echo "<form action=\"".actionLink("register")."\" method=\"post\">";
+echo "<form action=\"".htmlentities(actionLink("register"))."\" method=\"post\">";
 
 RenderTemplate('form_register', array('fields' => $fields));
 

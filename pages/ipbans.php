@@ -58,7 +58,7 @@ print "
 	$banList
 </table>
 
-<form action=\"".actionLink("ipbans")."\" method=\"post\">
+<form action=\"".htmlentities(actionLink("ipbans"))."\" method=\"post\">
 	<table class=\"outline margin width50\">
 		<tr class=\"header1\">
 			<th colspan=\"2\">

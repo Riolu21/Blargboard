@@ -68,7 +68,7 @@ MakeCrumbs(array('' => __('Log in')));
 $forgotPass = '';
 
 if(Settings::get("mailResetSender") != "")
-	$forgotPass = "<button onclick=\"document.location = '".actionLink("lostpass")."'; return false;\">".__("Forgot password?")."</button>";
+	$forgotPass = "<button onclick=\"document.location = '".htmlentities(actionLink("lostpass"),ENT_QUOTES)."'; return false;\">".__("Forgot password?")."</button>";
 	
 $fields = array(
 	'username' => "<input type=\"text\" name=\"name\" size=24 maxlength=20>",
@@ -79,7 +79,7 @@ $fields = array(
 	'btnForgotPass' => $forgotPass,
 );
 
-echo "<form name=\"loginform\" action=\"".actionLink("login")."\" method=\"post\">";
+echo "<form name=\"loginform\" action=\"".htmlentities(actionLink("login"))."\" method=\"post\">";
 
 RenderTemplate('form_login', array('fields' => $fields));
 

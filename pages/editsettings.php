@@ -84,7 +84,7 @@ if(isset($_POST["_plugin"]))
 
 
 echo "
-	<form action=\"".actionLink("editsettings")."\" method=\"post\">
+	<form action=\"".htmlentities(actionLink("editsettings"))."\" method=\"post\">
 		<input type=\"hidden\" name=\"_plugin\" value=\"$plugin\">
 		<input type=\"hidden\" name=\"key\" value=\"{$loguser['token']}\">";
 

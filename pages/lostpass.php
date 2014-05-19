@@ -67,7 +67,7 @@ else
 	MakeCrumbs(array(actionLink('login') => __('Log in'), '' => __('Request password reset')));
 	
 	echo "
-	<form action=\"".actionLink("lostpass")."\" method=\"post\">";
+	<form action=\"".htmlentities(actionLink("lostpass"))."\" method=\"post\">";
 	
 	$fields = array(
 		'username' => "<input type=\"text\" name=\"name\" maxlength=20 size=24>",

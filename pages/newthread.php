@@ -403,7 +403,7 @@ $fields = array(
 echo "
 	<script src=\"".resourceLink("js/threadtagging.js")."\"></script>
 	<script src=\"".resourceLink('js/polleditor.js')."\"></script>
-	<form name=\"postform\" action=\"".actionLink("newthread", $fid)."\" method=\"post\" enctype=\"multipart/form-data\">";
+	<form name=\"postform\" action=\"".htmlentities(actionLink("newthread", $fid))."\" method=\"post\" enctype=\"multipart/form-data\">";
 					
 RenderTemplate('form_newthread', array('fields' => $fields, 'pollMode' => (int)$_POST['poll']));
 

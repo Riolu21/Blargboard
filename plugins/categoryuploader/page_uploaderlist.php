@@ -204,7 +204,7 @@ MakeCrumbs(array(
 				actionLink("uploaderlist", "", "cat=".$cat["id"]) => $cat["name"],
 				), $links);
 
-print "<form method=\"post\" action=\"".actionLink("uploader", "", "cat=${_GET["cat"]}")."\">";
+print "<form method=\"post\" action=\"".htmlentities(actionLink("uploader", "", "cat=${_GET["cat"]}"))."\">";
 listCategory($_GET["cat"]);
 print '<input type="hidden" name="token" value="'.$loguser['token'].'" />';
 print "</form>";

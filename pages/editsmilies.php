@@ -73,7 +73,7 @@ write(
 		To edit, change either code or image fields to <em>not</em> match their hidden counterparts.
 	</div>
 
-	<form method=\"post\" action=\"".actionLink("editsmilies")."\">
+	<form method=\"post\" action=\"".htmlentities(actionLink("editsmilies"))."\">
 
 		<table class=\"outline margin\" style=\"width: 30%;\">
 			<tr class=\"header1\">

@@ -855,7 +855,7 @@ foreach ($epFields as $catid => $cfields)
 
 
 echo "
-	<form action=\"".actionLink("editprofile")."\" method=\"post\" enctype=\"multipart/form-data\">
+	<form action=\"".htmlentities(actionLink("editprofile"))."\" method=\"post\" enctype=\"multipart/form-data\">
 ";
 
 RenderTemplate('form_editprofile', array(

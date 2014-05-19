@@ -40,7 +40,7 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 			$rBlock = Query("insert into {blockedlayouts} (user, blockee) values ({0}, {1})", $id, $loguserid);
 		elseif(!$block && $isBlocked)
 			$rBlock = Query("delete from {blockedlayouts} where user={0} and blockee={1} limit 1", $id, $loguserid);
-		die(header("Location: ".actionLink("profile", $id)));
+		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 	}
 	if($_GET['action'] == "delete")
 	{
@@ -48,7 +48,7 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 		if ($canDeleteComments || ($postedby == $loguserid && HasPermission('user.deleteownusercomments')))
 		{
 			Query("delete from {usercomments} where uid={0} and id={1}", $id, (int)$_GET['cid']);
-			die(header("Location: ".actionLink("profile", $id)));
+			die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 		}
 	}
 
@@ -57,7 +57,7 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 		$rComment = Query("insert into {usercomments} (uid, cid, date, text) values ({0}, {1}, {2}, {3})", $id, $loguserid, time(), $_POST['text']);
 		if($loguserid != $id)
 			Query("update {users} set newcomments = 1 where id={0}", $id);
-		die(header("Location: ".actionLink("profile", $id)));
+		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 	}
 }
 
@@ -278,7 +278,7 @@ $rComments = Query("SELECT
 		WHERE uc.uid={0}
 		ORDER BY uc.date ASC LIMIT {1u},{2u}", $id, $realFrom, $realLen);
 
-$pagelinks = PageLinksInverted(actionLink("profile", $id, "from="), $cpp, $from, $total);
+$pagelinks = PageLinksInverted(actionLink("profile", $id, "from=", $user['name']), $cpp, $from, $total);
 
 $comments = array();
 while($comment = Fetch($rComments))
@@ -303,7 +303,7 @@ $commentField = '';
 if($canComment)
 {
 	$commentField = "
-		<form name=\"commentform\" method=\"post\" action=\"".actionLink("profile")."\">
+		<form name=\"commentform\" method=\"post\" action=\"".htmlentities(actionLink("profile"))."\">
 			<input type=\"hidden\" name=\"id\" value=\"$id\">
 			<input type=\"text\" name=\"text\" style=\"width: 80%;\" maxlength=\"255\">
 			<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">

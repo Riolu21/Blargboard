@@ -56,7 +56,7 @@ if(isset($_REQUEST['q']))
 MakeCrumbs(array(actionLink("search") => __("Search")));
 
 echo "
-	<form action=\"".actionLink("search")."\" method=\"post\">";
+	<form action=\"".htmlentities(actionLink("search"))."\" method=\"post\">";
 	
 $fields = array(
 	'terms' => "<input type=\"text\" maxlength=\"1024\" name=\"q\" style=\"width:100%;border-sizing:border-box;-moz-border-sizing:border-box;\" value=\"".htmlspecialchars($_REQUEST['q'])."\">",
