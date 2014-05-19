@@ -24,8 +24,8 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 	{
 		Query("delete from {moodavatars} where uid={0} and mid={1}", $loguserid, $mid);
 		Query("update {posts} set mood=0 where user={0} and mood={1}", $loguserid, $mid);
-		if(file_exists("{$dataDir}avatars/".$loguserid."_".$mid))
-			unlink("{$dataDir}avatars/".$loguserid."_".$mid);
+		if(file_exists(DATA_DIR."avatars/".$loguserid."_".$mid))
+			unlink(DATA_DIR."avatars/".$loguserid."_".$mid);
 			
 		die(header('Location: '.actionLink('editavatars')));
 	}
@@ -63,7 +63,7 @@ if(isset($_POST['actionrename']) || isset($_POST['actiondelete']) || isset($_POS
 			if(!$error)
 			{
 				$tmpfile = $_FILES['picture']['tmp_name'];
-				$file = "{$dataDir}avatars/".$loguserid."_".$mid;
+				$file = DATA_DIR."avatars/".$loguserid."_".$mid;
 
 				if($_POST['name'] == "")
 					$_POST['name'] = "#".$mid;
@@ -109,7 +109,7 @@ while($mood = Fetch($rMoods))
 {
 	$row = array();
 	
-	$row['avatar'] = "<img src=\"{$dataDir}avatars/{$loguserid}_{$mood['mid']}\" alt=\"\">";
+	$row['avatar'] = "<img src=\"".DATA_URL."avatars/{$loguserid}_{$mood['mid']}\" alt=\"\">";
 	
 	$row['field'] = "
 				<form method=\"post\" action=\"".actionLink("editavatars")."\">

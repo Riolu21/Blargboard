@@ -2,6 +2,9 @@
 
 $starttime = microtime(true);
 
+// change this to change your board's default page
+define('MAIN_PAGE', 'home');
+
 $ajaxPage = false;
 if(isset($_GET['ajax']))
 	$ajaxPage = true;
@@ -13,7 +16,7 @@ $layout_actionlinks = '';
 
 if (isset($_GET['forcelayout']))
 {
-	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, $boardroot, "", false, true);
+	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, BOARD_ROOT, "", false, true);
 	die(header('Location: '.$_SERVER['HTTP_REFERER']));
 }
 
@@ -31,27 +34,12 @@ $metaStuff = array(
 //=======================
 // Do the page
 
-$mainPage = 'home';
-
 if (isset($_GET['page']))
 	$page = $_GET['page'];
 else
-	$page = $mainPage;
+	$page = MAIN_PAGE;
 if(!ctype_alnum($page))
-	$page = $mainPage;
-
-// TODO make them take URL names into account? or nuke them?
-if($page == $mainPage)
-{
-	if(isset($_GET['fid']) && (int)$_GET['fid'] > 0 && !isset($_GET['action']))
-		die(header("Location: ".actionLink("forum", (int)$_GET['fid'])));
-	if(isset($_GET['tid']) && (int)$_GET['tid'] > 0)
-		die(header("Location: ".actionLink("thread", (int)$_GET['tid'])));
-	if(isset($_GET['uid']) && (int)$_GET['uid'] > 0)
-		die(header("Location: ".actionLink("profile", (int)$_GET['uid'])));
-	if(isset($_GET['pid']) && (int)$_GET['pid'] > 0)
-		die(header("Location: ".actionLink("post", (int)$_GET['pid'])));
-}
+	$page = MAIN_PAGE;
 
 define('CURRENT_PAGE', $page);
 
@@ -127,8 +115,7 @@ setLastActivity();
 // Panels and footer
 
 require('userpanel.php');
-
-require('sidebar.php');
+require('menus.php');
 
 $mobileswitch = '';
 if ($mobileLayout) $mobileswitch .= 'Mobile view - ';
@@ -208,7 +195,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
-	<script type="text/javascript">boardroot = <?php print json_encode($boardroot); ?>;</script>
+	<script type="text/javascript">boardroot = <?php print json_encode(BOARD_ROOT); ?>;</script>
 
 	<?php $bucket = "pageHeader"; include("./lib/pluginloader.php"); ?>
 	

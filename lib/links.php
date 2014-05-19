@@ -16,7 +16,7 @@ function urlNamify($urlname)
 
 function actionLink($action, $id="", $args="", $urlname="")
 {
-	global $boardroot, $mainPage;
+	$boardroot = BOARD_ROOT;
 	if($boardroot == "")
 		$boardroot = "./";
 
@@ -24,7 +24,7 @@ function actionLink($action, $id="", $args="", $urlname="")
 	//$bucket = "linkMangler"; include('lib/pluginloader.php');
 	
 	// rewritten links
-	/*if ($action == $mainPage) $action = '';
+	/*if ($action == MAIN_PAGE) $action = '';
 	else $action .= '/';
 	
 	if ($id)
@@ -39,7 +39,7 @@ function actionLink($action, $id="", $args="", $urlname="")
 	// non-rewritten links
 	$res = "";
 
-	if($action != $mainPage)
+	if($action != MAIN_PAGE)
 		$res .= "&page=$action";
 
 	if($id != "")
@@ -84,21 +84,19 @@ function getForm($action, $id='')
 
 function resourceLink($what)
 {
-	global $boardroot;
-	return "$boardroot$what";
+	return BOARD_ROOT.$what;
 }
 
 function themeResourceLink($what)
 {
-	global $theme, $boardroot;
-	return $boardroot."themes/$theme/$what";
+	global $theme;
+	return BOARD_ROOT."themes/$theme/$what";
 }
 
 function getMinipicTag($user)
 {
-	global $dataUrl;
 	if (!$user['minipic']) return '';
-	$pic = str_replace('$root/', $dataUrl, $user['minipic']);
+	$pic = str_replace('$root/', DATA_URL, $user['minipic']);
 	$minipic = "<img src=\"".htmlspecialchars($pic)."\" alt=\"\" class=\"minipic\" />&nbsp;";
 	return $minipic;
 }
@@ -360,8 +358,8 @@ function getServerURL($https = false)
 
 function getServerURLNoSlash($https = false)
 {
-    global $boardroot, $serverport;
-    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr($boardroot, 0, strlen($boardroot)-1);
+    global $serverport;
+    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(BOARD_ROOT, 0, strlen(BOARD_ROOT)-1);
 }
 
 function getFullRequestedURL($https = false)

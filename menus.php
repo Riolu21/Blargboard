@@ -2,15 +2,15 @@
 
 $headerlinks = array
 (
-	$boardroot => Settings::get('breadcrumbsMainName'), 
+	actionLink('home') => 'Home', 
 	actionLink('board') => 'Forums',
 );
 
 $sidelinks = array
 (
-	Settings::get('breadcrumbsMainName') => array
+	Settings::get('menuMainName') => array
 	(
-		$boardroot => 'Home page',
+		actionLink('home') => 'Home page',
 		actionLink('board') => 'Forums',
 		actionLink('faq') => 'FAQ',
 		actionLink('memberlist') => 'Member list',
@@ -20,7 +20,5 @@ $sidelinks = array
 		actionLink('search') => 'Search',
 	),
 );
-
-$bucket = "links"; include("./lib/pluginloader.php");
 
 ?>

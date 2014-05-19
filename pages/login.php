@@ -4,11 +4,11 @@
 
 if($_POST['action'] == "logout")
 {
-	setcookie("logsession", "", 2147483647, $boardroot, "", false, true);
+	setcookie("logsession", "", 2147483647, BOARD_ROOT, "", false, true);
 	Query("UPDATE {users} SET loggedin = 0 WHERE id={0}", $loguserid);
-	Query("DELETE FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].$salt));
+	Query("DELETE FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].SALT));
 
-	die(header("Location: $boardroot"));
+	die(header("Location: ".BOARD_ROOT));
 }
 elseif(isset($_POST['actionlogin']))
 {
@@ -18,7 +18,7 @@ elseif(isset($_POST['actionlogin']))
 	$user = Fetch(Query("select * from {users} where name={0}", $_POST['name']));
 	if($user)
 	{
-		$sha = doHash($pass.$salt.$user['pss']);
+		$sha = doHash($pass.SALT.$user['pss']);
 		if($user['password'] === $sha)
 			$okay = true;
 	}
@@ -37,8 +37,8 @@ elseif(isset($_POST['actionlogin']))
 		//TODO: Tie sessions to IPs if user has enabled it (or probably not)
 
 		$sessionID = Shake();
-		setcookie("logsession", $sessionID, 2147483647, $boardroot, "", false, true);
-		Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.$salt), $user["id"], $_POST["session"]?1:0);
+		setcookie("logsession", $sessionID, 2147483647, BOARD_ROOT, "", false, true);
+		Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], $_POST['session']?1:0);
 
 		Report("[b]".$user['name']."[/] logged in.", 1);
 		
@@ -50,7 +50,7 @@ elseif(isset($_POST['actionlogin']))
 			if($testuser['id'] == $user['id'])
 				continue;
 
-			$sha = doHash($_POST['pass'].$salt.$testuser['pss']);
+			$sha = doHash($_POST['pass'].SALT.$testuser['pss']);
 			if($testuser['password'] === $sha)
 				$matches[] = $testuser['id'];
 		}
@@ -58,7 +58,7 @@ elseif(isset($_POST['actionlogin']))
 		if (count($matches) > 0)
 			Query("INSERT INTO {passmatches} (date,ip,user,matches) VALUES (UNIX_TIMESTAMP(),{0},{1},{2})", $_SERVER['REMOTE_ADDR'], $user['id'], implode(',',$matches));
 
-		die(header("Location: $boardroot"));
+		die(header("Location: ".BOARD_ROOT));
 	}
 }
 

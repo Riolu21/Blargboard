@@ -102,7 +102,7 @@ $loguser = NULL;
 
 if($_COOKIE['logsession'] && !$ipban)
 {
-	$session = Fetch(Query("SELECT * FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].$salt)));
+	$session = Fetch(Query("SELECT * FROM {sessions} WHERE id={0}", doHash($_COOKIE['logsession'].SALT)));
 	if($session)
 	{
 		$loguser = Fetch(Query("SELECT * FROM {users} WHERE id={0}", $session["user"]));
@@ -113,10 +113,10 @@ if($_COOKIE['logsession'] && !$ipban)
 
 if($loguser)
 {
-	$loguser['token'] = hash('sha1', "{$loguser['id']},{$loguser['pss']},{$salt},dr567hgdf546guol89ty896rd7y56gvers9t");
+	$loguser['token'] = hash('sha1', "{$loguser['id']},{$loguser['pss']},".SALT.",dr567hgdf546guol89ty896rd7y56gvers9t");
 	$loguserid = $loguser["id"];
 	
-	$sessid = doHash($_COOKIE['logsession'].$salt);
+	$sessid = doHash($_COOKIE['logsession'].SALT);
 	Query("UPDATE {sessions} SET lasttime={0} WHERE id={1}", time(), $sessid);
 	Query("DELETE FROM {sessions} WHERE user={0} AND lasttime<={1}", $loguserid, time()-2592000);
 }

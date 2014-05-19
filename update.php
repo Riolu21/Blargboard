@@ -94,7 +94,7 @@ if ($_POST['submit'])
 		
 	if (!NumRows($res)) die('Invalid username or password.'.$footer);
 	$user = Fetch($res);
-	if (hash('sha256', $boardpassword.$salt.$user['pss'], FALSE) !== $user['password'])
+	if (hash('sha256', $boardpassword.SALT.$user['pss'], FALSE) !== $user['password'])
 		die('Invalid username or password.'.$footer);
 	
 	Upgrade();

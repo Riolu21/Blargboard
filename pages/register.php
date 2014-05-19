@@ -14,7 +14,7 @@ if($_POST['register'])
 {
 	$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
 	$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-	$kuridata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5($kurikey, true), base64_decode($_POST['kuridata']), MCRYPT_MODE_ECB, $iv);
+	$kuridata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), base64_decode($_POST['kuridata']), MCRYPT_MODE_ECB, $iv);
 	if (!$kuridata) Kill('Hack attempt detected');
 	
 	$kuridata = explode('|', $kuridata);
@@ -22,7 +22,7 @@ if($_POST['register'])
 	$kuriseed = intval($kuridata[0]);
 	$check = intval($kuridata[1]);
 	$kurichallenge = $kuridata[2];
-	$kurichallenge = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5($kurikey.$check, true), base64_decode($kurichallenge), MCRYPT_MODE_ECB, $iv);
+	$kurichallenge = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY.$check, true), base64_decode($kurichallenge), MCRYPT_MODE_ECB, $iv);
 	if (!$kurichallenge) Kill('Hack attempt detected');
 	
 	$kurichallenge = explode('|', $kurichallenge);
@@ -89,7 +89,7 @@ if($_POST['register'])
 	else
 	{
 		$newsalt = Shake();
-		$sha = doHash($_POST['pass'].$salt.$newsalt);
+		$sha = doHash($_POST['pass'].SALT.$newsalt);
 		$uid = FetchResult("SELECT id+1 FROM {users} WHERE (SELECT COUNT(*) FROM {users} u2 WHERE u2.id={users}.id+1)=0 ORDER BY id ASC LIMIT 1");
 		if($uid < 1) $uid = 1;
 
@@ -115,7 +115,7 @@ if($_POST['register'])
 			if($testuser['id'] == $user['id'])
 				continue;
 
-			$sha = doHash($_POST['pass'].$salt.$testuser['pss']);
+			$sha = doHash($_POST['pass'].SALT.$testuser['pss']);
 			if($testuser['password'] === $sha)
 				$matches[] = $testuser['id'];
 		}
@@ -130,8 +130,8 @@ if($_POST['register'])
 		if($_POST['autologin'])
 		{
 			$sessionID = Shake();
-			setcookie("logsession", $sessionID, 0, $boardroot, "", false, true);
-			Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.$salt), $user['id'], 0);
+			setcookie("logsession", $sessionID, 0, BOARD_ROOT, "", false, true);
+			Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], 0);
 			die(header("Location: ".actionLink('profile', $user['id'], '', $user['name'])));
 		}
 		else
@@ -147,16 +147,16 @@ else
 }
 
 
-$kuriseed = crc32($kurikey.microtime());
+$kuriseed = crc32(KURIKEY.microtime());
 srand($kuriseed);
 $check = time();
 $kurichallenge = "{$kuriseed}|{$check}|".rand(3,12);
 
 $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
 $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-$kurichallenge = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5($kurikey.$check, true), $kurichallenge, MCRYPT_MODE_ECB, $iv);
+$kurichallenge = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY.$check, true), $kurichallenge, MCRYPT_MODE_ECB, $iv);
 $kurichallenge = base64_encode($kurichallenge);
-$kuridata = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5($kurikey, true), "{$kuriseed}|{$check}|{$kurichallenge}", MCRYPT_MODE_ECB, $iv);
+$kuridata = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), "{$kuriseed}|{$check}|{$kurichallenge}", MCRYPT_MODE_ECB, $iv);
 $kuridata = base64_encode($kuridata);
 
 $fields = array(

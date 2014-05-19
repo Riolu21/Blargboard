@@ -12,10 +12,11 @@ if(!is_file('config/database.php'))
 
 
 $boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
+define('BOARD_ROOT', $boardroot);
 define('BOARD_CWD', getcwd());
 
-$dataDir = 'data/';
-$dataUrl = $boardroot.$dataDir;
+define('DATA_DIR', 'data/');
+define('DATA_URL', BOARD_ROOT.DATA_DIR);
 
 
 // Deslash GPC variables if we have magic quotes on
@@ -43,6 +44,9 @@ function usectime()
 	return $t['sec'] + ($t['usec'] / 1000000);
 }
 
+
+// undocumented feature: multiple 'boards'.
+// add in here to add board sections to your board
 $forumBoards = array('' => 'Main forums');
 
 
@@ -103,6 +107,5 @@ $tpl = new Smarty;
 $tpl->assign('config', array('date' => $loguser['dateformat'], 'time' => $loguser['timeformat']));
 $tpl->assign('loguserid', $loguserid);
 
-$mainPage = "board";
 $bucket = "init"; include(BOARD_CWD."/lib/pluginloader.php");
 

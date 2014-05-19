@@ -81,14 +81,12 @@ else if($action == "tf")	//Theme File
 
 function checkForImage(&$image, $external, $file)
 {
-	global $dataDir, $dataUrl;
-
 	if($image) return;
 
 	if($external)
 	{
-		if(file_exists($dataDir.$file))
-			$image = $dataUrl.$file;
+		if(file_exists(DATA_DIR.$file))
+			$image = DATA_URL.$file;
 	}
 	else
 	{

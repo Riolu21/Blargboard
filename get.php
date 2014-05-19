@@ -9,7 +9,7 @@ if (!$entry)
 if ($entry['deldate'] != 0)
 	die(__("No such file."));
 
-$path = $dataDir.'uploads/'.$entry['physicalname'];
+$path = DATA_DIR.'uploads/'.$entry['physicalname'];
 
 if(!file_exists($path))
 	die(__("No such file."));

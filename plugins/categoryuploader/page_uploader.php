@@ -4,7 +4,7 @@ include('lib.php');
 
 $title = __("Uploader");
 
-$rootdir = $dataDir."uploader";
+$rootdir = DATA_DIR."uploader";
 
 if($uploaderWhitelist)
 	$goodfiles = explode(" ", Settings::pluginGet('uploaderWhitelist'));

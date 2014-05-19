@@ -139,10 +139,11 @@ $logSqlErrors = 0;
 		die('Error: failed to create the config file. Check the permissions of the user running PHP.'.$footer);
 	
 	$salt = Shake(24);
-	$saltfile = '<?php $salt = '.phpescape($salt).'; ?>';
+	define('SALT', $salt);
+	$saltfile = '<?php define(\'SALT\', '.phpescape($salt).'); ?>';
 	file_put_contents('config/salt.php', $saltfile);
 	
-	$kurifile = '<?php $kurikey = '.phpescape(Shake(32)).'; ?>';
+	$kurifile = '<?php define(\'KURIKEY\', '.phpescape(Shake(32)).'); ?>';
 	file_put_contents('config/kurikey.php', $kurifile);
 	
 	require('lib/mysql.php');

@@ -2,7 +2,7 @@
 
 // Uploader support hub
 
-$uploaddir = $dataDir."uploader";
+$uploaddir = DATA_DIR."uploader";
 
 // uploader settings
 

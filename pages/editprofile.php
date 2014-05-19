@@ -237,7 +237,7 @@ if($_POST['actionsave'])
 
 	if($_POST['currpassword'] != "")
 	{
-		$sha = doHash($_POST['currpassword'].$salt.$loguser['pss']);
+		$sha = doHash($_POST['currpassword'].SALT.$loguser['pss']);
 		if($loguser['password'] == $sha)
 			$passwordEntered = true;
 		else
@@ -363,10 +363,10 @@ if($_POST['actionsave'])
 						if (substr($user[$field],0,6) == '$root/')
 						{
 							// verify that the file they want us to delete is an internal avatar and not something else
-							$path = str_replace('$root/', $dataDir, $user[$field]);
+							$path = str_replace('$root/', DATA_DIR, $user[$field]);
 							if (!file_exists($path.'.internal')) continue;
 							$hash = file_get_contents($path.'.internal');
-							if ($hash === hash_hmac_file('sha256', $path, $userid.$salt))
+							if ($hash === hash_hmac_file('sha256', $path, $userid.SALT))
 							{
 								@unlink($path);
 								@unlink($path.'.internal');
@@ -464,7 +464,7 @@ function dummycallback($field, $item)
 
 function HandlePicture($field, $type, &$usepic)
 {
-	global $userid, $dataDir, $salt;
+	global $userid;
 	
 	if($type == 0)
 	{
@@ -524,7 +524,7 @@ function HandlePicture($field, $type, &$usepic)
 		if(!$oversize)
 		{
 			//Just copy it over.
-			copy($tempFile, $dataDir.$targetFile);
+			copy($tempFile, DATA_DIR.$targetFile);
 		}
 		else
 		{
@@ -539,7 +539,7 @@ function HandlePicture($field, $type, &$usepic)
 				$targetImage = imagecreatetruecolor(floor($maxDim * $ratio), $maxDim);
 				imagecopyresampled($targetImage, $sourceImage, 0,0,0,0, $maxDim * $ratio, $maxDim, $width, $height);
 			}
-			imagepng($targetImage, $dataDir.$targetFile);
+			imagepng($targetImage, DATA_DIR.$targetFile);
 			imagedestroy($targetImage);
 		}
 	}
@@ -553,11 +553,11 @@ function HandlePicture($field, $type, &$usepic)
 			return format(__("Dimensions of {0} must be at most {1} by {1} pixels."), $errorname, $maxDim);
 		}
 		else
-			copy($tempFile, $dataDir.$targetFile);
+			copy($tempFile, DATA_DIR.$targetFile);
 	}
 	
 	// file created to verify that the avatar was created here
-	file_put_contents($dataDir.$targetFile.'.internal', hash_hmac_file('sha256', $dataDir.$targetFile, $userid.$salt));
+	file_put_contents(DATA_DIR.$targetFile.'.internal', hash_hmac_file('sha256', DATA_DIR.$targetFile, $userid.SALT));
 	
 	$usepic = '$root/'.$targetFile;
 	return true;
@@ -566,7 +566,7 @@ function HandlePicture($field, $type, &$usepic)
 // Special field-specific callbacks
 function HandlePassword($field, $item)
 {
-	global $sets, $salt, $user, $loguser, $loguserid;
+	global $sets, $user, $loguser, $loguserid;
 	if($_POST[$field] != "" && $_POST['repeat'.$field] != "" && $_POST['repeat'.$field] !== $_POST[$field])
 	{
 		return __("To change your password, you must type it twice without error.");
@@ -578,12 +578,12 @@ function HandlePassword($field, $item)
 	if($_POST[$field])
 	{
 		$newsalt = Shake();
-		$sha = doHash($_POST[$field].$salt.$newsalt);
+		$sha = doHash($_POST[$field].SALT.$newsalt);
 		$_POST[$field] = $sha;
 		$sets[] = "pss = '".$newsalt."'";
 
 		//Now logout all the sessions that aren't this one, for security.
-		Query("DELETE FROM {sessions} WHERE id != {0} and user = {1}", doHash($_COOKIE['logsession'].$salt), $user["id"]);
+		Query("DELETE FROM {sessions} WHERE id != {0} and user = {1}", doHash($_COOKIE['logsession'].SALT), $user['id']);
 	}
 
 	return false;

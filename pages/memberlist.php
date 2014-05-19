@@ -153,7 +153,7 @@ while($user = Fetch($rUsers))
 
 	if($user['picture'])
 	{
-		$pic = str_replace('$root/', $dataUrl, $user['picture']);
+		$pic = str_replace('$root/', DATA_URL, $user['picture']);
 		$udata['avatar'] = "<img src=\"".htmlspecialchars($pic)."\" alt=\"\" style=\"max-width: 60px;max-height:60px;\">";
 	}
 	else

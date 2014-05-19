@@ -10,7 +10,7 @@ $goombas = array($goom1, $goom2, $goom3);
 
 $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
 $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-$kuridata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5($kurikey, true), base64_decode($_GET['data']), MCRYPT_MODE_ECB, $iv);
+$kuridata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY, true), base64_decode($_GET['data']), MCRYPT_MODE_ECB, $iv);
 if (!$kuridata) die();
 
 $kuridata = explode('|', $kuridata);
@@ -18,7 +18,7 @@ if (count($kuridata) != 3) die();
 $kuriseed = intval($kuridata[0]);
 $check = intval($kuridata[1]);
 $kurichallenge = $kuridata[2];
-$kurichallenge = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5($kurikey.$check, true), base64_decode($kurichallenge), MCRYPT_MODE_ECB, $iv);
+$kurichallenge = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, md5(KURIKEY.$check, true), base64_decode($kurichallenge), MCRYPT_MODE_ECB, $iv);
 if (!$kurichallenge) die();
 
 $kurichallenge = explode('|', $kurichallenge);

@@ -160,7 +160,7 @@ function wikiFilter($text, $nocontbox)
 
 // TODO: implement wiki banning/localmod system
 $canedit = $loguserid && HasPermission('wiki.editpages');
-$token = hash('sha256', "{$loguserid},{$loguser['pss']},{$salt},wikiXD,sfg657gsfh685gh7s4sg6f5hgf");
+$token = hash('sha256', "{$loguserid},{$loguser['pss']},".SALT.",wikiXD,sfg657gsfh685gh7s4sg6f5hgf");
 
 $links = actionLinkTagItem('Recent changes', 'wikichanges');
 if ($canedit) $links .= actionLinkTagItem('Create page', 'wikiedit', '', 'createnew');

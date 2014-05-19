@@ -59,7 +59,7 @@ else
 $tpp = 5;
 
 //echo '<br>';
-$links = array('<a href="'.$boardroot.'rss.php">'.__('RSS feed').'</a>');
+$links = array('<a href="'.BOARD_ROOT.'rss.php">'.__('RSS feed').'</a>');
 if (HasPermission('forum.postthreads', $forum['id']))
 	$links[] = actionLinkTag(__('Post new'), 'newthread', $forum['id']);
 

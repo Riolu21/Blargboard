@@ -4,7 +4,7 @@ include('lib.php');
 
 $title = __("Uploader");
 
-$rootdir = $dataDir."uploader";
+$rootdir = DATA_DIR."uploader";
 
 if($uploaderWhitelist)
 	$goodfiles = explode(" ", $uploaderWhitelist);
@@ -13,7 +13,7 @@ $badfiles = array("html", "htm", "php", "php2", "php3", "php4", "php5", "php6", 
 
 function listCategory($cat)
 {
-	global $loguser, $loguserid, $rootdir, $userSelectUsers, $boardroot;
+	global $loguser, $loguserid, $rootdir, $userSelectUsers, BOARD_ROOT;
 
 	if(isset($_GET['sort']) && $_GET['sort'] == "filename" || $_GET['sort'] == "date")
 		$skey = $_GET['sort'];
@@ -141,7 +141,7 @@ function listCategory($cat)
 			<tr class=\"cell{0}\">
 				{7}
 				<td>
-					<a href=\"{$boardroot}get.php?id={1}\">{2}</a>{3}
+					<a href=\"".BOARD_ROOT."get.php?id={1}\">{2}</a>{3}
 				</td>
 				<td>
 					{4}

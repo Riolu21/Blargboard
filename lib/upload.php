@@ -4,8 +4,8 @@ define('POST_ATTACHMENT_CAP', 10*1024*1024);
 
 function UploadFile($file, $parenttype, $parentid, $cap, $description='', $temporary=false)
 {
-	global $dataDir, $loguser, $loguserid, $salt;
-	$targetdir = $dataDir.'uploads';
+	global $loguser, $loguserid;
+	$targetdir = DATA_DIR.'uploads';
 	
 	$filedata = $_FILES[$file];
 	$filename = $filedata['name'];
@@ -30,7 +30,7 @@ function UploadFile($file, $parenttype, $parentid, $cap, $description='', $tempo
 
 		$fullpath = $targetdir.'/'.$pname;
 		copy($temp, $fullpath);
-		file_put_contents($fullpath.'.hash', hash_hmac_file('sha256', $fullpath, $salt));
+		file_put_contents($fullpath.'.hash', hash_hmac_file('sha256', $fullpath, SALT));
 		
 		Report("[b]".$loguser['name']."[/] uploaded file \"[b]".$filename."[/]\"", false);
 
@@ -40,11 +40,9 @@ function UploadFile($file, $parenttype, $parentid, $cap, $description='', $tempo
 
 function DeleteUpload($path, $userid)
 {
-	global $salt;
-	
 	if (!file_exists($path.'.hash')) return;
 	$hash = file_get_contents($path.'.hash');
-	if ($hash === hash_hmac_file('sha256', $path, $userid.$salt))
+	if ($hash === hash_hmac_file('sha256', $path, $userid.SALT))
 	{
 		@unlink($path);
 		@unlink($path.'.hash');
@@ -53,8 +51,7 @@ function DeleteUpload($path, $userid)
 
 function CleanupUploads()
 {
-	global $dataDir, $salt;
-	$targetdir = $dataDir.'uploads';
+	$targetdir = DATA_DIR.'uploads';
 	
 	$timebeforedel = time()-604800; // one week
 	$todelete = Query("SELECT physicalname, user, filename FROM {uploadedfiles} WHERE deldate!=0 AND deldate<{0}", $timebeforedel);
@@ -73,8 +70,7 @@ function CleanupUploads()
 
 function HandlePostAttachments($postid, $final)
 {
-	global $dataDir;
-	$targetdir = $dataDir.'uploads';
+	$targetdir = DATA_DIR.'uploads';
 	
 	if (!Settings::get('postAttach')) return array();
 	

@@ -124,9 +124,9 @@ $emailField = __("Private");
 if($user['email'] == "")
 	$emailField = __("None given");
 else if ($user['showemail'])
-	$emailField = "<span id=\"emailField\">".__("Public")." <button style=\"font-size: 0.7em;\" onclick=\"$(this.parentNode).load('{$boardroot}ajaxcallbacks.php?a=em&amp;id=".$id."');\">".__("Show")."</button></span>";
+	$emailField = "<span id=\"emailField\">".__("Public")." <button style=\"font-size: 0.7em;\" onclick=\"$(this.parentNode).load('".BOARD_ROOT."ajaxcallbacks.php?a=em&amp;id=".$id."');\">".__("Show")."</button></span>";
 else if (HasPermission('admin.editusers'))
-	$emailField = "<span id=\"emailField\">".__("Private")." <button style=\"font-size: 0.7em;\" onclick=\"$(this.parentNode).load('{$boardroot}ajaxcallbacks.php?a=em&amp;id=".$id."');\">".__("Snoop")."</button></span>";
+	$emailField = "<span id=\"emailField\">".__("Private")." <button style=\"font-size: 0.7em;\" onclick=\"$(this.parentNode).load('".BOARD_ROOT."ajaxcallbacks.php?a=em&amp;id=".$id."');\">".__("Snoop")."</button></span>";
 
 
 $profileParts = array();

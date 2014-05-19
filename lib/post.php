@@ -85,8 +85,6 @@ function getActivity($id)
 
 function makePostText($post, $poster)
 {
-	global $boardroot, $dataDir;
-
 	$noSmilies = $post['options'] & 2;
 
 	//Do Ampersand Tags
@@ -130,9 +128,9 @@ function makePostText($post, $poster)
 		
 		while ($attach = Fetch($attachs))
 		{
-			$url = $boardroot.'get.php?id='.htmlspecialchars($attach['id']);
+			$url = BOARD_ROOT.'get.php?id='.htmlspecialchars($attach['id']);
 			$linkurl = $ispreview ? '#' : $url;
-			$filesize = filesize($dataDir.'uploads/'.$attach['physicalname']);
+			$filesize = filesize(DATA_DIR.'uploads/'.$attach['physicalname']);
 			
 			$attachblock .= '<br><div class="post_attachment">';
 			
@@ -180,7 +178,7 @@ define('POST_SAMPLE', 3);			// sample post box (profile sample post, newreply po
 //		* noreplylinks: if set, no links to newreply.php (Quote/ID) are placed in the metabar (POST_NORMAL only)
 function makePost($post, $type, $params=array())
 {
-	global $loguser, $loguserid, $usergroups, $isBot, $blocklayouts, $dataDir, $dataUrl;
+	global $loguser, $loguserid, $usergroups, $isBot, $blocklayouts;
 	
 	$poster = getDataPrefix($post, 'u_');
 	$post['userlink'] = UserLink($poster);
@@ -317,12 +315,12 @@ function makePost($post, $type, $params=array())
 
 	if($post['mood'] > 0)
 	{
-		if(file_exists("${dataDir}avatars/".$poster['id']."_".$post['mood']))
-			$sidebar['avatar'] = "<img src=\"${dataUrl}avatars/".$poster['id']."_".$post['mood']."\" alt=\"\">";
+		if(file_exists(DATA_DIR."avatars/".$poster['id']."_".$post['mood']))
+			$sidebar['avatar'] = "<img src=\"".DATA_URL."avatars/".$poster['id']."_".$post['mood']."\" alt=\"\">";
 	}
 	else if ($poster['picture'])
 	{
-		$pic = str_replace('$root/', $dataUrl, $poster['picture']);
+		$pic = str_replace('$root/', DATA_URL, $poster['picture']);
 		$sidebar['avatar'] = "<img src=\"".htmlspecialchars($pic)."\" alt=\"\">";
 	}
 

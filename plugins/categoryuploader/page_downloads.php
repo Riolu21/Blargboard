@@ -2,7 +2,7 @@
 
 $title = 'Downloads';
 
-$rootdir = $dataDir."uploader";
+$rootdir = DATA_DIR."uploader";
 
 if ($_GET['id'])
 {
