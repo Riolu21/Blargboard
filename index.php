@@ -156,10 +156,11 @@ $favicon = resourceLink('img/favicon.ico');
 $themefile = "themes/$theme/style.css";
 if(!file_exists($themefile))
 	$themefile = "themes/$theme/style.php";
+	
 
 $layout_credits = 
 '<img src="'.resourceLink('img/poweredbyblarg.png').'" style="float: left; margin-right: 3px;">
-<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard 1.1</a> &middot; by StapleButter<br>
+<a href="http://blargboard.kuribo64.net/" target="_blank">Blargboard '.BLARG_VERSION.'</a> &middot; by StapleButter<br>
 Based off <a href="http://abxd.dirbaio.net/" target="_blank">ABXD</a> by Dirbaio, Kawa &amp; co.<br>';
 	
 

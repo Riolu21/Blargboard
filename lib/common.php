@@ -10,6 +10,8 @@ error_reporting(E_ALL ^ E_NOTICE | E_STRICT);
 if(!is_file('config/database.php'))
 	die(header('Location: install.php'));
 
+	
+define('BLARG_VERSION', '1.2');
 
 $boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
 define('BOARD_ROOT', $boardroot);

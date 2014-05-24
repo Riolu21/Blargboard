@@ -17,6 +17,32 @@ function startsWithIns($a, $b){
 	return startsWith(strtolower($a), strtolower($b));
 }
 
+// returns FALSE if it fails.
+function QueryURL($url)
+{
+	if (function_exists('curl_init'))
+	{
+		$page = curl_init($url);
+		if ($page === FALSE)
+			return FALSE;
+		
+		curl_setopt($page, CURLOPT_TIMEOUT, 10);
+		curl_setopt($page, CURLOPT_CONNECTTIMEOUT, 10);
+		curl_setopt($page, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($page, CURLOPT_USERAGENT, 'Blargboard/'.BLARG_VERSION);
+			
+		$result = curl_exec($page);
+		curl_close($page);
+		return $result;
+	}
+	else if (ini_get('allow_url_fopen'))
+	{
+		return file_get_contents($url);
+	}
+	else
+		return FALSE;
+}
+
 
 function format()
 {

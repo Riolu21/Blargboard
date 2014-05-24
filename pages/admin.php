@@ -10,8 +10,16 @@ $title = __("Administration");
 MakeCrumbs(array(actionLink("admin") => __('Admin')));
 
 
+if (function_exists('curl_init'))
+	$protstatus = __('Enabled (using cURL)');
+else if (ini_get('allow_url_fopen'))
+	$protstatus = __('Enabled (using fopen)');
+else
+	$protstatus = __('Disabled');
+
 
 $adminInfo = array();
+$adminInfo[__('Proxy protection')] = $protstatus;
 $adminInfo[__('Last viewcount milestone')] = $misc['milestone'];
 
 
