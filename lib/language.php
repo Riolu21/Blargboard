@@ -11,9 +11,9 @@
 
 $language = Settings::get("defaultLanguage");
 
-include_once("./lib/lang/".$language.".php");
+include_once(__DIR__."/lang/".$language.".php");
 if($language != "en_US")
-	include_once("./lib/lang/".$language."_lang.php");
+	include_once(__DIR__."/lang/".$language."_lang.php");
 
 function __($english, $flags = 0)
 {
@@ -22,9 +22,9 @@ function __($english, $flags = 0)
 	{
 		if(!isset($languagePack))
 		{
-			if(is_file("./lib/lang/".$language.".txt"))
+			if(is_file(__DIR__."/lang/".$language.".txt"))
 			{
-				importLanguagePack("./lib/lang/".$language.".txt");
+				importLanguagePack(__DIR__."/lang/".$language.".txt");
 				importPluginLanguagePacks($language.".txt");
 			}
 			else

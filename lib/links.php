@@ -21,7 +21,7 @@ function actionLink($action, $id="", $args="", $urlname="")
 		$boardroot = "./";
 
 	// calling plugins at EVERY link?! way to waste performances
-	//$bucket = "linkMangler"; include('lib/pluginloader.php');
+	//$bucket = "linkMangler"; include(__DIR__."/pluginloader.php");
 	
 	// rewritten links
 	/*if ($action == MAIN_PAGE) $action = '';
@@ -195,7 +195,7 @@ function userLink($user, $showMinipic = false, $customID = false)
 	
 	$classing = ' style="color: '.htmlspecialchars($fgroup[$scolor]).';"';
 
-	$bucket = "userLink"; include(BOARD_CWD.'/lib/pluginloader.php');
+	$bucket = "userLink"; include(__DIR__."/pluginloader.php");
 	
 	if (!$isbanned && $luckybastards && in_array($user['id'], $luckybastards))
 	{

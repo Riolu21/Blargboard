@@ -170,6 +170,18 @@ $tables = array
 		),
 		"special" => $keyID. ", key `mainkey` (`uid`, `mid`)"
 	),
+	"notifications" => array
+	(
+		"fields" => array
+		(
+			"type" => "varchar(16)".$notNull,
+			"key" => $genericInt,
+			"user" => $genericInt,
+			"date" => $genericInt,
+			"args" => $var256,
+		),
+		"special" => $keyID
+	),
 	"passmatches" => array
 	(
 		"fields" => array

@@ -173,7 +173,7 @@ function makeCrumbs($path, $links='')
 	{
 		$pathPrefix = array(actionLink(0) => Settings::get("breadcrumbsMainName"));
 
-		$bucket = "breadcrumbs"; include(BOARD_CWD."/lib/pluginloader.php");
+		$bucket = "breadcrumbs"; include(__DIR__."/pluginloader.php");
 
 		$path = $pathPrefix + $path;
 	}
@@ -241,7 +241,7 @@ function makeForumListing($parent, $board='')
 	while($forum = Fetch($rFora))
 	{
 		$skipThisOne = false;
-		$bucket = "forumListMangler"; include(BOARD_CWD."/lib/pluginloader.php");
+		$bucket = "forumListMangler"; include(__DIR__."/pluginloader.php");
 		if($skipThisOne)
 			continue;
 			

@@ -1,7 +1,7 @@
 <?php
 // AcmlmBoard XD support - MySQL database wrapper functions
 
-include("config/database.php");
+include(__DIR__."/../config/database.php");
 
 $queries = 0;
 
@@ -210,7 +210,7 @@ function loadFieldLists()
 	global $fieldLists;
 
 	//Allow plugins to add their own!
-	$bucket = "fieldLists"; include(BOARD_CWD."/lib/pluginloader.php");
+	$bucket = "fieldLists"; include(__DIR__."/pluginloader.php");
 }
 
 ?>

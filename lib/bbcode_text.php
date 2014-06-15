@@ -75,7 +75,7 @@ function postDoReplaceText($s, $parentTag, $parentMask)
 	}
 
 	//Plugin bucket for allowing plugins to add replacements.
-	$bucket = "postMangler"; include(BOARD_CWD."/lib/pluginloader.php");
+	$bucket = "postMangler"; include(__DIR__."/pluginloader.php");
 
 	return $s;
 }

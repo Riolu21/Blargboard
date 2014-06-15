@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/permstrings.php';
+require __DIR__."/permstrings.php";
 
 $usergroups = array();
 $grouplist = array();

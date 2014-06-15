@@ -66,10 +66,10 @@ class Settings
 
 		//Get the setting list.
 		if($pluginname == "main")
-			include("settingsfile.php");
+			include(__DIR__."/settingsfile.php");
 		else
 		{
-			@include("./plugins/".$plugins[$pluginname]['dir']."/settingsfile.php");
+			@include(__DIR__."/../plugins/".$plugins[$pluginname]['dir']."/settingsfile.php");
 		}
 		return $settings;
 	}
