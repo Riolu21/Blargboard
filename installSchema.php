@@ -175,12 +175,12 @@ $tables = array
 		"fields" => array
 		(
 			"type" => "varchar(16)".$notNull,
-			"key" => $genericInt,
+			"id" => $genericInt,
 			"user" => $genericInt,
 			"date" => $genericInt,
 			"args" => $var256,
 		),
-		"special" => "PRIMARY KEY (`type`,`key`,`user`), KEY `type` (`type`), KEY `user` (`user`), KEY `date` (`date`)"
+		"special" => "PRIMARY KEY (`type`,`id`,`user`), KEY `type` (`type`), KEY `user` (`user`), KEY `date` (`date`)"
 	),
 	"passmatches" => array
 	(
@@ -506,7 +506,7 @@ $tables = array
 			"globalblock" => $bool,
 			"fulllayout" => $bool,
 			"showemail" => $bool,
-			"newcomments" => $bool,
+			"lastprofileview" => $genericInt,
 			"tempbantime" => $hugeInt,
 			"tempbanpl" => $genericInt,
 			"pluginsettings" => $text,

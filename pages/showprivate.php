@@ -45,11 +45,15 @@ $links = array();
 if(!$snoop && $pm['userto'] == $loguserid)
 {
 	Query("update {pmsgs} set msgread=1 where id={0}", $pm['id']);
+	DismissNotification('pm', $pm['id'], $loguserid);
+	
 	$links[] = actionLinkTag(__("Send reply"), "sendprivate", "", "pid=".$pm['id']);
 }
 else if ($_GET['markread'])
 {
 	Query("update {pmsgs} set msgread=1 where id={0}", $pm['id']);
+	DismissNotification('pm', $pm['id'], -1);
+	
 	die(header('Location: '.actionLink('private')));
 }
 	

@@ -219,7 +219,7 @@ $fields = array(
 	'nopl' => "<label><input type=\"checkbox\" $nopl name=\"nopl\">&nbsp;".__("Disable post layout", 1)."</label>",
 	'nosm' => "<label><input type=\"checkbox\" $nosm name=\"nosm\">&nbsp;".__("Disable smilies", 1)."</label>",
 	
-	'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Post")."\">",
+	'btnPost' => "<input type=\"submit\" name=\"actionpost\" value=\"".__("Save")."\">",
 	'btnPreview' => "<input type=\"submit\" name=\"actionpreview\" value=\"".__("Preview")."\">",
 );
 

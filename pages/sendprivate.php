@@ -191,6 +191,8 @@ if($_POST['actionsend'] || $_POST['actionsave'])
 					
 					$rPM = Query("insert into {pmsgs} (id, userto, userfrom, conv_start, date, ip, msgread, drafting) values ({0}, {1}, {2}, {3}, {4}, {5}, 0, {6})", 
 						$pid, $recipient, $loguserid, $cs, time(), $_SERVER['REMOTE_ADDR'], 0);
+						
+					SendNotification('pm', $pid, $recipient);
 				}
 
 				die(header("Location: ".actionLink("private", "", "show=1")));

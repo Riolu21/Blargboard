@@ -10,9 +10,7 @@ if(NumRows($rUser))
 else
 	Kill(__("Unknown user ID."));
 	
-$uname = $user['name'];
-if($user['displayname'])
-	$uname = $user['displayname'];
+$uname = $user['displayname'] ?: $user['name'];
 
 $ugroup = $usergroups[$user['primarygroup']];
 $usgroups = array();
@@ -22,8 +20,8 @@ while ($sg = Fetch($res)) $usgroups[] = $usergroups[$sg['groupid']];
 
 if($id == $loguserid)
 {
-	Query("update {users} set newcomments = 0 where id={0}", $loguserid);
-	$loguser['newcomments'] = false;
+	Query("update {users} set lastprofileview={1} where id={0}", $loguserid, time());
+	DismissNotification('profilecomment', $loguserid, $loguserid);
 }
 
 $canDeleteComments = ($id == $loguserid && HasPermission('user.deleteownusercomments')) || HasPermission('admin.adminusercomments');
@@ -48,6 +46,13 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 		if ($canDeleteComments || ($postedby == $loguserid && HasPermission('user.deleteownusercomments')))
 		{
 			Query("delete from {usercomments} where uid={0} and id={1}", $id, (int)$_GET['cid']);
+			if ($loguserid != $id)
+			{
+				// dismiss any new comment notification that has been sent to that user, unless there are still new comments
+				$lastcmt = FetchResult("SELECT date FROM {usercomments} WHERE uid={0} ORDER BY date DESC LIMIT 1", $id);
+				if ($lastcmt < $user['lastprofileview'])
+					DismissNotification('profilecomment', $id, $id);
+			}
 			die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 		}
 	}
@@ -56,7 +61,9 @@ if($loguserid && $_REQUEST['token'] == $loguser['token'])
 	{
 		$rComment = Query("insert into {usercomments} (uid, cid, date, text) values ({0}, {1}, {2}, {3})", $id, $loguserid, time(), $_POST['text']);
 		if($loguserid != $id)
-			Query("update {users} set newcomments = 1 where id={0}", $id);
+		{
+			SendNotification('profilecomment', $id, $id);
+		}
 		die(header("Location: ".actionLink("profile", $id, '', $user['name'])));
 	}
 }

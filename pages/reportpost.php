@@ -42,6 +42,8 @@ if ($_POST['report'])
 		
 	Query("UPDATE {pmsgs_text} SET text={0} WHERE pid={1}", $report, $pmid);
 	
+	SendNotification('pm', $pmid, -1);
+	
 	die(header('Location: '.actionLink('post', $pid)));
 }
 

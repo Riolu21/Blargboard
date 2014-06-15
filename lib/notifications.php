@@ -1,69 +1,106 @@
 <?php
 
+// notification formatting callbacks for each notification type
+$NotifFormat = array
+(
+	'pm' => 'FormatNotif_PM',
+	'profilecomment' => 'FormatNotif_ProfileComment',
+);
+
+// plugins should use an init hook to extend $NotifFormat
+
+
+function FormatNotif_PM($id, $args)
+{
+	global $loguserid;
+	
+	$staffpm = '';
+	if (HasPermission('admin.viewstaffpms')) $staffpm = ' OR p.userto=-1';
+	
+	$pm = Fetch(Query("	SELECT 
+							p.id,
+							pt.title pmtitle, 
+							u.(_userfields) 
+						FROM 
+							{pmsgs} p 
+							LEFT JOIN {pmsgs_text} pt ON pt.pid=p.id 
+							LEFT JOIN {users} u ON u.id=p.userfrom 
+						WHERE 
+							p.id={0} AND (p.userto={1}{$staffpm})", 
+					$id, $loguserid));
+	$userdata = getDataPrefix($pm, 'u_');
+						
+	return __('New private message from ').UserLink($userdata)."\n".
+		actionLinkTag(htmlspecialchars($pm['pmtitle']), 'showprivate', $pm['id']);
+}
+
+function FormatNotif_ProfileComment($id, $args)
+{
+	global $loguserid, $loguser;
+	return __('New comments in ').actionLinkTag(__('your profile'), 'profile', $loguserid, '', $loguser['name']);
+}
+
+
 function notifsort($a, $b)
 {
 	if ($a['date'] == $b['date']) return 0;
 	return ($a['date'] > $b['date']) ? -1 : 1;
 }
 
-function getNotifications()
+function GetNotifications()
 {
-	global $loguserid, $loguser;
+	global $loguserid, $NotifFormat;
 	$notifs = array();
 	
 	if (!$loguserid) return $notifs;
 	
-	$staffpms = '';
-	if (HasPermission('admin.viewstaffpms')) $staffpms = ' OR p.userto={1}';
-	
-	$unreadpms = Query("	SELECT 
-								p.*, 
-								pt.title pmtitle, 
-								u.(_userfields) 
-							FROM 
-								{pmsgs} p 
-								LEFT JOIN {pmsgs_text} pt ON pt.pid=p.id 
-								LEFT JOIN {users} u ON u.id=p.userfrom 
-							WHERE 
-							(p.userto={0}{$staffpms}) AND p.msgread=0 AND p.drafting=0", 
-						$loguserid, -1);
-	
-	while ($pm = Fetch($unreadpms))
+	// TODO do it better!
+	$staffnotif = '';
+	if (HasPermission('admin.viewstaffpms')) $staffnotif = ' OR user=-1';
+
+	$ndata = Query("SELECT type,id,date,args FROM {notifications} WHERE user={0}{$staffnotif} ORDER BY date DESC", $loguserid);
+	while ($n = Fetch($ndata))
 	{
-		$userdata = getDataPrefix($pm, 'u_');
-		
+		$ncb = $NotifFormat[$n['type']];
+		if (function_exists($ncb))
+			$ndesc = $ncb($n['id'], $n['args']?unserialize($n['args']):null);
+		else
+			$ndesc = htmlspecialchars($n['type'].':'.$n['id']);
+			
+		$ts = '<span class="nobr">'; $te = '</span>';
+		$ndesc = $ts.str_replace("\n", $te.'<br>'.$ts, $ndesc).$te;
+			
 		$notifs[] = array
 		(
-			'date' => $pm['date'],
-			'text' => format(__('{2}New private message from {0}{3}{4}{2}{1}{3}'), 
-				userLink($userdata), actionLinkTag(htmlspecialchars($pm['pmtitle']), 'showprivate', $pm['id']),
-				'<span class="nobr">', '</span>', '<br>'),
+			'date' => $n['date'], 
+			'formattedDate' => relativedate($n['date']),
+			'text' => $ndesc
 		);
 	}
-	
-	if ($loguser['newcomments'])
-	{
-		$lastcmtdate = FetchResult("SELECT MAX(date) FROM {usercomments} WHERE uid={0}", $loguserid);
-		
-		$notifs[] = array
-		(
-			'date' => $lastcmtdate,
-			'text' => format(__('{1}New comments in {0}{2}'), actionLinkTag(__('your profile'), 'profile', $loguserid, '', $loguser['name']),
-				'<span class="nobr">', '</span>'),
-		);
-	}
-	
-	usort($notifs, 'notifsort');
-	
-	foreach ($notifs as $i=>$n)
-		$notifs[$i]['formattedDate'] = relativedate($n['date']);
 	
 	return $notifs;
 }
 
+// type: notification type (pm, profilecomment, etc)
+// id: identifier for this notification, should be unique (for example, for PMs the PM ID is used as an ID)
+// args: notification-specific args, used by the format callbacks
+function SendNotification($type, $id, $user, $args=null)
+{
+	$argstr = $args ? serialize($args) : '';
+	$now = time();
+	
+	Query("
+		INSERT INTO {notifications} (type,id,user,date,args) VALUES ({0},{1},{2},{3},{4})
+		ON DUPLICATE KEY UPDATE date={3}, args={4}",
+		$type, $id, $user, $now, $argstr);
+		
+	$bucket = 'sendNotification'; include(__DIR__.'/pluginloader.php');
+}
 
-// new notification system plans:
-// * type: 'pm' / 'profilecomment' / more
-// * key: identifier of the notification (derived from PM ID and such)
-// * args: serialized array of notification-specific arguments
+function DismissNotification($type, $id, $user)
+{
+	Query("DELETE FROM {notifications} WHERE type={0} AND id={1} AND user={2}", $type, $id, $user);
+	
+	$bucket = 'dismissNotification'; include(__DIR__.'/pluginloader.php');
+}
 
