@@ -180,7 +180,7 @@ $tables = array
 			"date" => $genericInt,
 			"args" => $var256,
 		),
-		"special" => $keyID
+		"special" => "PRIMARY KEY (`type`,`key`,`user`), KEY `type` (`type`), KEY `user` (`user`), KEY `date` (`date`)"
 	),
 	"passmatches" => array
 	(
