@@ -19,20 +19,15 @@ I forgot about.
 
 This board follows the Acmlmboard concept. If you don't know Acmlmboard, you don't know what you're missing.
 
--------------------------------------------------------------------------------
+## Requirements
 
-# Requirements
-
-Blargboard requires PHP 5.3. With a few changes, it could be lowered to 5.2, so this will
-be considered.
+Blargboard requires PHP 5.3. You also need the mcrypt extension.
 
 There is no exact requirement for MySQL, but make sure to have a recent version.
 
 Everything else is provided in the package.
 
--------------------------------------------------------------------------------
-
-# How to install and use
+## How to install and use
 
 PHP and MySQL knowledge isn't required to use Blargboard but is a plus.
 
@@ -45,12 +40,15 @@ If everything went fine, browse to your freshly installed board and configure it
 We recommend you take some time and make your own board themes and banner to give your board a truly unique feel.
 If you have HTML knowledge, you can even edit the templates to change your board's look more in-depth.
 
-DO NOT TRY USING THE PROVIDED PLUGINS. They haven't be adapted to the newer Blargboard
-codebase yet. Some may work, but others may break parts of your board.
+## Working plugins
 
--------------------------------------------------------------------------------
+The following plugins have been updated and are known to work with current Blargboard. Any other plugins in the repo are probably broken, so don't try using them.
 
-# How to update your board
+ * CustomUserNameColors
+ * ircreport
+ * layoutblockstats
+
+## How to update your board
 
 Download the most recent Blargboard package (be it an official release or a Git package).
 
@@ -66,9 +64,7 @@ Depending on the versions, your update may involve running extra scripts to fix 
 
 Updating from Blargboard 1.0 isn't covered.
 
--------------------------------------------------------------------------------
-
-# Features
+## Features
 
  * Flexible permission system
  * Plugin system
@@ -91,9 +87,7 @@ been adapted to Blargboard's database structure yet. Thus, when updating your Bl
 copy, you need to check for changes to database.sql and modify your database's structure
 accordingly.
 
--------------------------------------------------------------------------------
-
-# Board owner's tips
+## Board owner's tips
 
 http://board.example/?page=makelr -> regenerates the L/R tree used for forum listings and such.
 Use if some of your forums are showing up in wrong places.
@@ -118,19 +112,18 @@ WARNING: when banning someone, make sure that the secondary groups' permissions 
 
 How to (insert action): first look into your board's admin panel, settings panel, etc... then if you still can't find, ask us. But please don't be a noob and ask us about every little thing.
 
--------------------------------------------------------------------------------
-
-# Support
+## Support, troubleshooting, etc
 
 The Blargboard help forum is at Kuribo64: http://kuribo64.net/?page=forum&id=82
 
 If anything goes wrong with your board, go there and let us know. Make sure to describe your problems in detail, our crystal ball is scratched so we can't see well.
 
+If the error is a 'MySQL Error', to get a detailed report, you need to open config/database.php in a text editor, find `$debugMode = 0;` and replace it with `$debugMode = 1;`. 
+This will make the board give you the MySQL error message and the query which went wrong. Once you're done troubleshooting your board, it is recommended that you edit config/database.php back so that `$debugMode` is 0.
+
 YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING YOUR BOARD.
 
--------------------------------------------------------------------------------
-
-# TODO list
+## TODO list
 
 (no particular order there)
 
@@ -142,6 +135,7 @@ YOU WILL NOT RECEIVE HELP IF YOU HAVEN'T READ THE INSTRUCTIONS WHEN INSTALLING Y
  * more TODO at Kuribo64 and RVLution
  
  * low priority: change/remove file headers? most of the original files still say 'AcmlmBoard XD'
+ * besides it'd be an opportunity to add a license like the GPL
 
 -------------------------------------------------------------------------------
 
