@@ -668,6 +668,11 @@ table.post td.post:not(.haslayout)
 	padding: 10px;
 }
 
+table.post td.post.haslayout
+{
+	padding: 0px!important;
+}
+
 
 table.post td.meta
 {
