@@ -198,6 +198,11 @@ elseif($action == "vc")	//View Counter
 	$blah = FetchResult("select views from {misc}");
 	die(number_format($blah));
 }
+else if ($action == 'no') // notification list
+{
+	$notif = getNotifications();
+	die(json_encode($notif));
+}
 
 die(__("Unknown action."));
 ?>

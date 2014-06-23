@@ -45,20 +45,20 @@
 							{/foreach}
 						</ul>
 					</div>
-					<div id="notifMenuContainer" class="dropdownContainer">
-						{$numnotifs=count($notifications)}
-						<div id="notifMenuButton" class="navButton {if $numnotifs}hasNotifs{else}noNotif{/if}">
+					{$numnotifs=count($notifications)}
+					<div id="notifMenuContainer" class="dropdownContainer {if $numnotifs}hasNotifs{else}noNotif{/if}">
+						<div id="notifMenuButton" class="navButton">
 							Notifications
 							<span id="notifCount">{$numnotifs}</span>
-							{if $numnotifs}<i class="icon-caret-down"></i>{/if}
+							<i class="icon-caret-down"></i>
 						</div>
+						<ul id="notifList" class="dropdownMenu">
 						{if $numnotifs}
-						<ul class="dropdownMenu">
 							{foreach $notifications as $notif}
 								<li>{$notif.text}<br><small>{$notif.formattedDate}</small>
 							{/foreach}
-						</ul>
 						{/if}
+						</ul>
 					</div>
 					<span class="navButton">
 						<a href="#" onclick="$('#logout').submit(); return false;">Log out</a>

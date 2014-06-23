@@ -1,5 +1,7 @@
 /* AcmlmBoard XD - Shared elements */
 
+@import url('mobile.css');
+
 .newMarker
 {
 	width: 2.5em!important;
@@ -50,90 +52,6 @@ body
 	padding-right: 2px;
 }
 
-/* mobile shit */
-
-#mobile-crumbs
-{
-	margin: 0 0 1em;
-}
-
-#mobile-crumbs th
-{
-	text-align: left!important;
-}
-
-#mobile-crumbs a
-{
-	display: inline-block;
-	padding-top: 1em;
-	padding-bottom: 1em;
-}
-
-#mobile-crumbs button
-{
-	line-height: 2em;
-	font-weight: bold;
-	height: 3em;
-	width: 3em;
-}
-
-#mobile-crumbs button.notifs
-{
-	background: #c00;
-	color: white;
-	border-color: #f44;
-}
-
-#mobile-sidebar-container
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	max-width: 100%;
-	max-height: 100%;
-	z-index: 99998;
-}
-
-#mobile-sidebar-deactivate
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 14em;
-	height: 100%;
-	max-height: 100%;
-	z-index: 99999;
-}
-
-#mobile-sidebar
-{
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 14em;
-	height: 100%;
-	max-width: 90%;
-	max-height: 100%;
-	overflow: scroll;
-	z-index: 99999;
-}
-
-#mobile-sidebar td div
-{
-	width: 13em;
-	word-wrap: break-word;
-}
-
-#mobile-sidebar td.link a
-{
-	display: block;
-	padding: 0.5em;
-}
-
-.mobileNotif span.nobr { white-space: normal!important; }
-
 /* force header and footer to be the smallest possible */
 #main-header, #main-footer
 {
@@ -168,14 +86,6 @@ a
 {
 	text-decoration: none;
 	font-weight: bold;
-}
-a, a span
-{
-	     -o-transition: color .2s ease-in-out;
-		-ms-transition: color .2s ease-in-out;
-	        transition: color .2s ease-in-out;
-	   -moz-transition: color .2s ease-in-out;
-	-webkit-transition: color .2s ease-in-out;
 }
 
 a img
@@ -223,17 +133,9 @@ a:hover span
 	display:inline-block;
 }
 
-/* Name color table */
-.nc0x { color: #888888; } .nc1x { color: #888888; } .nc2x { color: #888888; }
-.nc00 { color: #97ACEF; } .nc10 { color: #F185C9; } .nc20 { color: #7C60B0; }
-.nc01 { color: #D8E8FE; } .nc11 { color: #FFB3F3; } .nc21 { color: #EEB9BA; }
-.nc02 { color: #AFFABE; } .nc12 { color: #C762F2; } .nc22 { color: #47B53C; }
-.nc03 { color: #FFEA95; } .nc13 { color: #C53A9E; } .nc23 { color: #F0C413; }
-.nc04 { color: #5555FF; } .nc14 { color: #FF5588; } .nc24 { color: #FF55FF; }
-.nc05 { color: #FF0000; } .nc15 { color: #FF0000; } .nc25 { color: #FF0000; }
-
 
 /* Widths */
+/* TODO REMOVE ME */
 .width100
 {
 	width: 100%;
@@ -538,7 +440,7 @@ ul.dropdownMenu li > a
 	to { -webkit-transform: scale(2,2); }
 }
 
-#notifMenuButton #notifCount
+#notifMenuContainer #notifCount
 {
 	color: white;
 	text-shadow: none;
@@ -547,7 +449,7 @@ ul.dropdownMenu li > a
 	display: inline-block;
 }
 
-#notifMenuButton.hasNotifs #notifCount
+#notifMenuContainer.hasNotifs #notifCount
 {
 	background: #c00;
 	border: 1px solid #f44;
@@ -567,10 +469,17 @@ ul.dropdownMenu li > a
 	-webkit-animation-timing-function: linear;
 }
 
-#notifMenuButton.noNotif #notifCount
+#notifMenuContainer.noNotif #notifCount
 {
 	background: #777;
 	border: 1px solid #999;
+}
+
+/* hide the dropdown arrow and notif menu if there are no notifications */
+#notifMenuContainer.noNotif #notifMenuButton i, 
+#notifMenuContainer.noNotif ul.dropdownMenu
+{
+	display: none;
 }
 
 /* Breadcrumbs */
