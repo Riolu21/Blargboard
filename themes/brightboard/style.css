@@ -3,12 +3,12 @@
 body
 {
 	background: #ccc;
-	color: #000;
+	color: #444;
 }
 
-table
+table, ul.dropdownMenu
 {
-	color: #000;
+	color: #444;
 }
 
 a:link, ul.dropdownMenu li a:link, td.crumb-container > table a:link,
@@ -25,7 +25,7 @@ a:hover, ul.dropdownMenu li a:hover, td.crumb-container > table a:hover
 .header0 th a:hover, .header1 th a:hover, table.post td.userlink a:hover, table.post td.meta a:hover
 { color: #fff; text-decoration: underline; }
 
-.userlink
+.userlink, th ul.dropdownMenu .userlink
 {
 	text-shadow: 1px 1px 2px #9b9b9b;
 }
@@ -192,7 +192,7 @@ table#page-container > tbody > tr:last-child > td.crumb-container > table > tbod
 	border-radius: 0;
 	background: #ddd;
 	text-shadow: none;
-	color: #000;
+	color: #444;
 }
 
 #header-sep
