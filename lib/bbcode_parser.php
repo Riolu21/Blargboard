@@ -147,9 +147,7 @@ function filterText($s, $parentTag, $parentMask)
 	
 	if ($parentMask & TAG_RAWCONTENTS) return $s;
 	
-	$limit = $mobileLayout ? 30 : 100;
-	$repl = ($parentTag=='<pre') ? "$0\n" : '$0<wbr>'; // hack
-	$s = preg_replace('@\S{'.$limit.'}@u', $repl, $s);
+	// place for some potential formatting that would distinguish RAWCONTENTS and NOFORMAT
 	
 	if ($parentMask & TAG_NOFORMAT) return $s;
 	
