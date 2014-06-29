@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 function do403()
 {
@@ -31,6 +32,7 @@ if (stristr($_SERVER['HTTP_REFERER'], 'refreshthis.com'))
 if ($isBot)
 {
 	// keep SE bots out of certain pages that don't interest them anyway
+	// TODO move that code to those individual pages
 	$forbidden = array('register', 'login', 'online', 'referrals', 'records', 'lastknownbrowsers');
 	if (in_array($_GET['page'], $forbidden))
 		do403();

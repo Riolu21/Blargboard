@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $ishttps = ($_SERVER['SERVER_PORT'] == 443);
 $serverport = ($_SERVER['SERVER_PORT'] == ($ishttps?443:80)) ? '' : ':'.$_SERVER['SERVER_PORT'];
@@ -16,7 +17,7 @@ function urlNamify($urlname)
 
 function actionLink($action, $id="", $args="", $urlname="")
 {
-	$boardroot = BOARD_ROOT;
+	$boardroot = URL_ROOT;
 	if($boardroot == "")
 		$boardroot = "./";
 
@@ -84,13 +85,13 @@ function getForm($action, $id='')
 
 function resourceLink($what)
 {
-	return BOARD_ROOT.$what;
+	return URL_ROOT.$what;
 }
 
 function themeResourceLink($what)
 {
 	global $theme;
-	return BOARD_ROOT."themes/$theme/$what";
+	return URL_ROOT."themes/$theme/$what";
 }
 
 function getMinipicTag($user)
@@ -359,7 +360,7 @@ function getServerURL($https = false)
 function getServerURLNoSlash($https = false)
 {
     global $serverport;
-    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(BOARD_ROOT, 0, strlen(BOARD_ROOT)-1);
+    return ($https?"https":"http") . "://" . $_SERVER['SERVER_NAME'].$serverport . substr(URL_ROOT, 0, strlen(URL_ROOT)-1);
 }
 
 function getFullRequestedURL($https = false)

@@ -1,14 +1,5 @@
 <?php
-$genericInt = "int(11) NOT NULL DEFAULT '0'";
-$smallerInt = "int(8) NOT NULL DEFAULT '0'";
-$bool = "tinyint(1) NOT NULL DEFAULT '0'";
-$notNull = " NOT NULL DEFAULT ''";
-$text = "text DEFAULT ''"; //NOT NULL breaks in certain versions/settings.
-$var128 = "varchar(128)".$notNull;
-$var256 = "varchar(256)".$notNull;
-$var1024 = "varchar(1024)".$notNull;
-$AI = "int(11) NOT NULL AUTO_INCREMENT";
-$keyID = "primary key (`id`)";
+if (!defined('BLARG')) die();
 
 function Import($sqlFile)
 {
@@ -36,7 +27,7 @@ function Upgrade()
 	global $dbname, $dbpref;
 
 	//Load the board tables.
-	include(__DIR__."/../installSchema.php");
+	include(__DIR__."/installSchema.php");
 
 	//Allow plugins to add their own tables!
 	if (NumRows(Query("show table status from $dbname like '{enabledplugins}'")))
@@ -45,7 +36,7 @@ function Upgrade()
 		while($plugin = Fetch($rPlugins))
 		{
 			$plugin = str_replace(array('.','/','\\'), '', $plugin['plugin']);
-			$path = __DIR__."/../plugins/$plugin/installSchema.php";
+			$path = __DIR__."/../../plugins/$plugin/installSchema.php";
 			if(file_exists($path))
 				include($path);
 		}

@@ -1,5 +1,6 @@
 <?php
 //  AcmlmBoard XD support - System feedback
+if (!defined('BLARG')) die();
 
 //	Not really much different to kill()
 function Alert($s, $t="")

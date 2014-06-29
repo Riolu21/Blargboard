@@ -1,5 +1,5 @@
 <?php
-// AcmlmBoard XD support - Main hub
+if (!defined('BLARG')) die();
 
 header('Cache-control: no-cache, private');
 header('X-Frame-Options: DENY');
@@ -7,18 +7,21 @@ header('X-Frame-Options: DENY');
 // I can't believe there are PRODUCTION servers that have E_NOTICE turned on. What are they THINKING? -- Kawa
 error_reporting(E_ALL ^ E_NOTICE | E_STRICT);
 
-if(!is_file('config/database.php'))
-	die(header('Location: install.php'));
+
 
 	
 define('BLARG_VERSION', '1.2');
 
-$boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
-define('BOARD_ROOT', $boardroot);
-define('BOARD_CWD', getcwd());
+define('BOARD_ROOT', dirname(__DIR__).'/');
+define('DATA_DIR', BOARD_ROOT.'data/');
 
-define('DATA_DIR', 'data/');
-define('DATA_URL', BOARD_ROOT.DATA_DIR);
+$boardroot = preg_replace('{/[^/]*$}', '/', $_SERVER['SCRIPT_NAME']);
+define('URL_ROOT', $boardroot);
+define('DATA_URL', URL_ROOT.'data/');
+
+
+if(!is_file(__DIR__.'/../config/database.php'))
+	die(header('Location: install.php'));
 
 
 // Deslash GPC variables if we have magic quotes on
@@ -58,7 +61,6 @@ include(__DIR__."/settingsfile.php");
 
 include(__DIR__."/debug.php");
 include(__DIR__."/mysql.php");
-include(__DIR__."/mysqlfunctions.php");
 include(__DIR__."/settingssystem.php");
 Settings::load();
 Settings::checkPlugin("main");

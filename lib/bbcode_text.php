@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 // Misc things that get replaced in text.
 

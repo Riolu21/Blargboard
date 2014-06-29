@@ -1,5 +1,6 @@
 <?php
 //  AcmlmBoard XD support - Handy snippets
+if (!defined('BLARG')) die();
 
 function endsWith($a, $b){
 	return substr($a, strlen($a) - strlen($b)) == $b;

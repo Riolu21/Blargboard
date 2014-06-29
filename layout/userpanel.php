@@ -1,4 +1,6 @@
 <?php
+if (!defined('BLARG')) die();
+
 $userMenu = array();
 
 if($loguserid)

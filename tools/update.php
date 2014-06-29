@@ -72,6 +72,8 @@ td:not([colspan='2'])
 <br>
 <?php
 
+define('BLARG', 1);
+
 // Acmlmboard 1.x style
 $footer = '</div></body></html>';
 
@@ -83,9 +85,9 @@ if ($_POST['submit'])
 	if (!$boardusername || !$boardpassword)
 		die('Please enter a username and password.'.$footer);
 	
-	require('config/salt.php');
-	require('lib/mysql.php');
-	require('lib/mysqlfunctions.php');
+	require(__DIR__.'/../config/salt.php');
+	require(__DIR__.'/../lib/mysql.php');
+	require(__DIR__.'/lib/mysqlfunctions.php');
 	$debugMode = 1;
 	
 	$rootgroup = FetchResult("SELECT value FROM {settings} WHERE plugin={0} AND name={1}", 'main', 'rootGroup');

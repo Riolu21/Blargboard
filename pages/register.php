@@ -130,7 +130,7 @@ if($_POST['register'])
 		if($_POST['autologin'])
 		{
 			$sessionID = Shake();
-			setcookie("logsession", $sessionID, 0, BOARD_ROOT, "", false, true);
+			setcookie("logsession", $sessionID, 0, URL_ROOT, "", false, true);
 			Query("INSERT INTO {sessions} (id, user, autoexpire) VALUES ({0}, {1}, {2})", doHash($sessionID.SALT), $user['id'], 0);
 			die(header("Location: ".actionLink('profile', $user['id'], '', $user['name'])));
 		}

@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 /*
 	I really don't like the idea of settings.php. Self-modifying code is bad, and

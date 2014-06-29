@@ -1,5 +1,7 @@
 <?php
 
+define('BLARG', 1);
+
 function fixyoutube($m)
 {
 	$url = $m[1];
@@ -9,7 +11,7 @@ function fixyoutube($m)
 	return '<a href=\"'.htmlspecialchars($url).'\">(video)</a>';
 }
 
-require('lib/common.php');
+require(__DIR__.'/lib/common.php');
 
 $fid = Settings::get('newsForum');
 if(!HasPermission('forum.viewforum', $fid))

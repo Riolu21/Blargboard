@@ -1,6 +1,7 @@
 <?php
 
 $starttime = microtime(true);
+define('BLARG', 1);
 
 // change this to change your board's default page
 define('MAIN_PAGE', 'home');
@@ -9,14 +10,14 @@ $ajaxPage = false;
 if(isset($_GET['ajax']))
 	$ajaxPage = true;
 
-require('lib/common.php');
+require(__DIR__.'/lib/common.php');
 
 $layout_crumbs = '';
 $layout_actionlinks = '';
 
 if (isset($_GET['forcelayout']))
 {
-	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, BOARD_ROOT, "", false, true);
+	setcookie('forcelayout', (int)$_GET['forcelayout'], time()+365*24*3600, URL_ROOT, "", false, true);
 	die(header('Location: '.$_SERVER['HTTP_REFERER']));
 }
 
@@ -58,15 +59,16 @@ if ($loguser['flags'] & 0x2)
 
 if (!$fakeerror)
 {
-	try {
-		try {
+	try 
+	{
+		try 
+		{
 			if(array_key_exists($page, $pluginpages))
 			{
 				$plugin = $pluginpages[$page];
 				$self = $plugins[$plugin];
 				
-				chdir('plugins/'.$self['dir']);
-				$page = "pages/".$page.".php";
+				$page = __DIR__.'/plugins/'.$self['dir']."/pages/".$page.".php";
 				if(!file_exists($page))
 					throw new Exception(404);
 				include($page);
@@ -74,7 +76,7 @@ if (!$fakeerror)
 			}
 			else 
 			{
-				$page = 'pages/'.$page.'.php';
+				$page = __DIR__.'/pages/'.$page.'.php';
 				if(!file_exists($page))
 					throw new Exception(404);
 				include($page);
@@ -82,20 +84,17 @@ if (!$fakeerror)
 		}
 		catch(Exception $e)
 		{
-			chdir(BOARD_CWD);
 			if ($e->getMessage() != 404)
 			{
 				throw $e;
 			}
-			require('pages/404.php');
+			require(__DIR__.'/pages/404.php');
 		}
 	}
 	catch(KillException $e)
 	{
 		// Nothing. Just ignore this exception.
 	}
-	
-	chdir(BOARD_CWD);
 }
 
 if($ajaxPage)
@@ -108,14 +107,14 @@ $layout_contents = ob_get_contents();
 ob_end_clean();
 
 //Do these things only if it's not an ajax page.
-include("lib/views.php");
+include(__DIR__."/lib/views.php");
 setLastActivity();
 
 //=======================
 // Panels and footer
 
-require('userpanel.php');
-require('menus.php');
+require(__DIR__.'/layout/userpanel.php');
+require(__DIR__.'/layout/menus.php');
 
 $mobileswitch = '';
 if ($mobileLayout) $mobileswitch .= 'Mobile view - ';
@@ -147,14 +146,14 @@ if($title != '')
 // Board logo and theme
 
 $layout_logopic = 'img/logo.png';
-if (!file_exists($layout_logopic))
+if (!file_exists(__DIR__.'/'.$layout_logopic))
 	$layout_logopic = 'img/logo.jpg';
 $layout_logopic = resourceLink($layout_logopic);
 
 $favicon = resourceLink('img/favicon.ico');
 
 $themefile = "themes/$theme/style.css";
-if(!file_exists($themefile))
+if(!file_exists(__DIR__.'/'.$themefile))
 	$themefile = "themes/$theme/style.php";
 	
 
@@ -168,10 +167,6 @@ $layout_contents = "<div id=\"page_contents\">$layout_contents</div>";
 
 //=======================
 // Print everything!
-
-//if($debugMode)
-//	$layout_contents.="<table class=\"outline margin width100\"><tr class=header0><th colspan=4>List of queries
-//	                   <tr class=header1><th>Query<th>Backtrace$querytext</table>";
 
 $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' seconds (with '.$queries.' SQL queries and '.sprintf('%.03f',memory_get_usage() / 1024).'K of RAM)';
 
@@ -196,9 +191,9 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.tablednd_0_5.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jquery.scrollTo-1.4.2-min.js");?>"></script>
 	<script type="text/javascript" src="<?php print resourceLink("js/jscolor/jscolor.js");?>"></script>
-	<script type="text/javascript">boardroot = <?php print json_encode(BOARD_ROOT); ?>;</script>
+	<script type="text/javascript">boardroot = <?php print json_encode(URL_ROOT); ?>;</script>
 
-	<?php $bucket = "pageHeader"; include("./lib/pluginloader.php"); ?>
+	<?php $bucket = "pageHeader"; include(__DIR__."/lib/pluginloader.php"); ?>
 	
 	<?php if ($mobileLayout) { ?>
 	<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, width=device-width">
@@ -242,7 +237,7 @@ $perfdata = 'Page rendered in '.sprintf('%.03f',microtime(true)-$starttime).' se
 </html>
 <?php
 
-$bucket = "finish"; include('lib/pluginloader.php');
+$bucket = "finish"; include(__DIR__.'/lib/pluginloader.php');
 
 ?>
 

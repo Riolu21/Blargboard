@@ -1,11 +1,8 @@
 <?php
-/* Language Pack support
- * ---------------------
- * --> Phase 1 - make all the pages language pack compatible.
- *       This starts from the 2.2.1 release onwards.
- *     Phase 2 - collect translations.
- *     Phase 3 - release 3.0 on December 23rd, with the full language pack support.
- */
+if (!defined('BLARG')) die();
+
+// TODO make this work in templates at all
+// we'll consider it whenever there's enough demand.
 
 //define("PHASE", 2);
 

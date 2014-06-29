@@ -89,12 +89,14 @@ function Shake($len=16)
 	return $salt;
 }
 
+define('BLARG', 1);
+
 // Acmlmboard 1.x style
 $footer = '</div></body></html>';
 
 // pre-install checks
 
-if (file_exists('config/database.php'))
+if (file_exists(__DIR__.'/config/database.php'))
 	die('The board is already installed.'.$footer);
 	
 $footer = '<br><br><a href="javascript:window.history.back();">Go back and try again</a></div></body></html>';
@@ -102,11 +104,11 @@ $footer = '<br><br><a href="javascript:window.history.back();">Go back and try a
 if (version_compare(PHP_VERSION, '5.3.0') < 0)
 	die('Error: Blargboard requires PHP 5.3 or above.'.$footer);
 	
-if (!is_dir('config'))
-	if (!mkdir('config'))
+if (!is_dir(__DIR__.'/config'))
+	if (!mkdir(__DIR__.'/config'))
 		die('Error: failed to create the config directory. Check the permissions of the user running PHP.'.$footer);
 	
-@mkdir('templates_c');
+@mkdir(__DIR__.'/templates_c');
 
 if ($_POST['submit'])
 {
@@ -135,23 +137,23 @@ $dbpref = '.phpescape($_POST['dbprefix']).';
 $debugMode = 0;
 $logSqlErrors = 0;
 ?>';
-	if (file_put_contents('config/database.php', $dbconfig) === FALSE)
+	if (file_put_contents(__DIR__.'/config/database.php', $dbconfig) === FALSE)
 		die('Error: failed to create the config file. Check the permissions of the user running PHP.'.$footer);
 	
 	$salt = Shake(24);
 	define('SALT', $salt);
 	$saltfile = '<?php define(\'SALT\', '.phpescape($salt).'); ?>';
-	file_put_contents('config/salt.php', $saltfile);
+	file_put_contents(__DIR__.'/config/salt.php', $saltfile);
 	
 	$kurifile = '<?php define(\'KURIKEY\', '.phpescape(Shake(32)).'); ?>';
-	file_put_contents('config/kurikey.php', $kurifile);
+	file_put_contents(__DIR__.'/config/kurikey.php', $kurifile);
 	
-	require('lib/mysql.php');
-	require('lib/mysqlfunctions.php');
+	require(__DIR__.'/lib/mysql.php');
+	require(__DIR__.'/tools/lib/mysqlfunctions.php');
 	$debugMode = 1;
 	
 	Upgrade();
-	Import('database.sql');
+	Import(__DIR__.'/database.sql');
 	
 	$pss = Shake(16);
 	$sha = hash('sha256', $boardpassword.$salt.$pss, FALSE);
@@ -162,15 +164,14 @@ $logSqlErrors = 0;
 ?>
 	<h3>Your new Blargboard board has been successfully installed!</h3>
 	<br>
-	You should now:
-	<ul>
-		<li>delete install.php and database.sql
-		<li><a href="./?page=login">log in to your board</a> and configure it
-	</ul>
+	You should now log in to your board</a> and configure it.<br>
 	<br>
 	Thank you for choosing Blargboard!<br>
 	<br>
 <?php
+	
+	unlink(__DIR__.'/database.sql');
+	unlink(__DIR__.'/install.php');
 }
 else
 {

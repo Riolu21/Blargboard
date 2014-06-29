@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $pluginSettings = array();
 $plugins = array();
@@ -37,17 +38,17 @@ function getPluginData($plugin, $load = true)
 {
 	global $pluginpages, $pluginbuckets, $plugintemplates, $misc, $abxd_version;
 
-	if(!is_dir("./plugins/".$plugin))
+	if(!is_dir(__DIR__."/../plugins/".$plugin))
 		throw new BadPluginException("Plugin folder is gone");
 
 	$plugindata = array();
 	$plugindata['dir'] = $plugin;
-	if(!file_exists("./plugins/".$plugin."/plugin.settings"))
+	if(!file_exists(__DIR__."/../plugins/".$plugin."/plugin.settings"))
 		throw new BadPluginException(__("Plugin folder doesn't contain plugin.settings"));
 
 	$minver = 220; //we introduced these plugins in 2.2.0 so assume this.
 
-	$settingsFile = file_get_contents("./plugins/".$plugin."/plugin.settings");
+	$settingsFile = file_get_contents(__DIR__."/../plugins/".$plugin."/plugin.settings");
 	$settings = explode("\n", $settingsFile);
 	foreach($settings as $setting)
 	{
@@ -74,7 +75,7 @@ function getPluginData($plugin, $load = true)
 	$plugindata['pages'] = array();
 	$plugindata['templates'] = array();
 
-	$dir = "./plugins/".$plugindata['dir'];
+	$dir = __DIR__."/../plugins/".$plugindata['dir'];
 	$pdir = @opendir($dir);
 	while($f = readdir($pdir))
 	{

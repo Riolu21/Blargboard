@@ -1,10 +1,10 @@
 <?php
 
-require('config/kurikey.php');
+require(__DIR__.'/config/kurikey.php');
 
-$goom1 = imagecreatefrompng('ranksets/mario/goomba.png');
-$goom2 = imagecreatefrompng('ranksets/mario/redgoomba.png');
-$goom3 = imagecreatefrompng('ranksets/mario/giantgoomba.png');
+$goom1 = imagecreatefrompng(__DIR__.'/kurichallenge/goomba.png');
+$goom2 = imagecreatefrompng(__DIR__.'/kurichallenge/redgoomba.png');
+$goom3 = imagecreatefrompng(__DIR__.'/kurichallenge/giantgoomba.png');
 $goombas = array($goom1, $goom2, $goom3);
 
 

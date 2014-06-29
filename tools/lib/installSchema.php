@@ -1,4 +1,9 @@
 <?php
+if (!defined('BLARG')) die();
+
+// TODO
+// * standardize the database format so it doesn't depend on MySQL types
+// * store indexes under a better form
 
 $utf8ci = ' CHARACTER SET utf8 COLLATE utf8_general_ci';
 $hugeInt = "bigint(20) NOT NULL DEFAULT '0'";

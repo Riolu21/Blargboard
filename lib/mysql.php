@@ -1,5 +1,6 @@
 <?php
 // AcmlmBoard XD support - MySQL database wrapper functions
+if (!defined('BLARG')) die();
 
 include(__DIR__."/../config/database.php");
 

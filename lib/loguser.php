@@ -1,5 +1,6 @@
 <?php
 //  AcmlmBoard XD support - Login support
+if (!defined('BLARG')) die();
 
 $bots = array(
 	"Microsoft URL Control",

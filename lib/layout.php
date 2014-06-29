@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 // ----------------------------------------------------------------------------
 // --- General layout functions
@@ -13,34 +14,24 @@ function RenderTemplate($template, $options=null)
 		$plugin = $plugintemplates[$template];
 		$self = $plugins[$plugin];
 		
-		if ($mobileLayout)
-		{
-			$tplname = 'plugins/'.$self['dir'].'/templates/mobile/'.$template.'.tpl';
-			if (!file_exists($tplname)) $tplname = 'plugins/'.$self['dir'].'/templates/'.$template.'.tpl';
-		}
-		else
-			$tplname = 'plugins/'.$self['dir'].'/templates/'.$template.'.tpl';
+		$tplroot = __DIR__.'/../plugins/'.$self['dir'].'/templates/';
 	}
 	else
-	{
-		if ($mobileLayout)
-		{
-			$tplname = 'templates/mobile/'.$template.'.tpl';
-			if (!file_exists($tplname)) $tplname = 'templates/'.$template.'.tpl';
-		}
-		else
-			$tplname = 'templates/'.$template.'.tpl';
-	}
+		$tplroot = __DIR__.'/../templates/';
 	
-	$oldcwd = getcwd();
-	chdir(BOARD_CWD);
+	if ($mobileLayout)
+	{
+		$tplname = $tplroot.'mobile/'.$template.'.tpl';
+		if (!file_exists($tplname)) 
+			$tplname = $tplroot.$template.'.tpl';
+	}
+	else
+		$tplname = $tplroot.$template.'.tpl';
 	
 	if ($options)
 		$tpl->assign($options);
 	
 	$tpl->display($tplname);
-	
-	chdir($oldcwd);
 }
 
 

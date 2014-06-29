@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 define('POST_ATTACHMENT_CAP', 10*1024*1024);
 

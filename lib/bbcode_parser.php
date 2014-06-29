@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 // BBCode parser core.
 // Parses BBCode and HTML intelligently so the output is reasonably well-formed, and doesn't contain evil stuff.

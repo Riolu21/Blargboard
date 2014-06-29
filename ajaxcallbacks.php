@@ -1,7 +1,8 @@
 <?php
 
+define('BLARG', 1);
 $ajaxPage = true;
-include("lib/common.php");
+include(__DIR__."/lib/common.php");
 header("Cache-Control: no-cache");
 
 getBirthdaysText(false);

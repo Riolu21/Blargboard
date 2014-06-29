@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 // notification formatting callbacks for each notification type
 $NotifFormat = array

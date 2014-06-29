@@ -1,4 +1,6 @@
 <?php
+if (!defined('BLARG')) die();
+
 //Plugin loader -- By Nikolaj
 global $pluginbuckets, $plugins, $plugin;
 
@@ -9,20 +11,15 @@ $oldself = $self;
 
 if (isset($pluginbuckets[$bucket]))
 {
-	$oldcwd = getcwd();
-	
 	foreach ($pluginbuckets[$bucket] as $plugin)
 	{
 		if (isset($plugins[$plugin]))
 		{
 			$self = $plugins[$plugin];
-			chdir(BOARD_CWD.'/plugins/'.$self['dir']);
-			include($bucket.".php");
+			include(__DIR__.'/../plugins/'.$self['dir'].'/'.$bucket.'.php');
 			unset($self);
 		}
 	}
-	
-	chdir($oldcwd);
 }
 
 $self = $oldself;

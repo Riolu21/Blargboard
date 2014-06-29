@@ -1,6 +1,6 @@
 <?php
 //  AcmlmBoard XD support - Post functions
-
+if (!defined('BLARG')) die();
 
 function ParseThreadTags($title)
 {
@@ -128,7 +128,7 @@ function makePostText($post, $poster)
 		
 		while ($attach = Fetch($attachs))
 		{
-			$url = BOARD_ROOT.'get.php?id='.htmlspecialchars($attach['id']);
+			$url = URL_ROOT.'get.php?id='.htmlspecialchars($attach['id']);
 			$linkurl = $ispreview ? '#' : $url;
 			$filesize = filesize(DATA_DIR.'uploads/'.$attach['physicalname']);
 			
