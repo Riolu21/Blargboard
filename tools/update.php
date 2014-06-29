@@ -87,7 +87,7 @@ if ($_POST['submit'])
 	
 	require(__DIR__.'/../config/salt.php');
 	require(__DIR__.'/../lib/mysql.php');
-	require(__DIR__.'/lib/mysqlfunctions.php');
+	require(__DIR__.'/../lib/dbupgrade.php');
 	$debugMode = 1;
 	
 	$rootgroup = FetchResult("SELECT value FROM {settings} WHERE plugin={0} AND name={1}", 'main', 'rootGroup');
