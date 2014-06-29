@@ -143,7 +143,7 @@ $temp[__("Name")] = $minipic . htmlspecialchars($user['displayname'] ? $user['di
 if($title)
 	$temp[__("Title")] = $title;
 	
-$glist = '<strong style="color: '.htmlspecialchars($ugroup['color_unspec']).';">'.htmlspecialchars($ugroup['name']).'</strong>';
+$glist = '<strong class="userlink" style="color: '.htmlspecialchars($ugroup['color_unspec']).';">'.htmlspecialchars($ugroup['name']).'</strong>';
 foreach ($usgroups as $sgroup)
 {
 	if ($sgroup['display'] > -1)
