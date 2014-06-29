@@ -1,5 +1,6 @@
 <?php
 //  AcmlmBoard XD support - Handy snippets
+// TODO organize better
 if (!defined('BLARG')) die();
 
 function endsWith($a, $b){
@@ -16,6 +17,35 @@ function startsWith($a, $b){
 
 function startsWithIns($a, $b){
 	return startsWith(strtolower($a), strtolower($b));
+}
+
+
+//	Not really much different to kill()
+function Alert($s, $t="")
+{
+	if($t=="")
+		$t = __("Notice");
+
+	RenderTemplate('messagebox', 
+		array(	'msgtitle' => $t,
+				'message' => $s));
+}
+
+function Kill($s, $t="")
+{
+	if($t=="")
+		$t = __("Error");
+	Alert($s, $t);
+	throw new KillException();
+}
+
+function dieAjax($what)
+{
+	global $ajaxPage;
+
+	echo $what;
+	$ajaxPage = true;
+	throw new KillException();
 }
 
 // returns FALSE if it fails.

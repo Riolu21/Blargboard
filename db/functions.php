@@ -27,7 +27,7 @@ function Upgrade()
 	global $dbname, $dbpref;
 
 	//Load the board tables.
-	include(__DIR__."/installSchema.php");
+	include(__DIR__."/schema.php");
 
 	//Allow plugins to add their own tables!
 	if (NumRows(Query("show table status from $dbname like '{enabledplugins}'")))
@@ -36,7 +36,7 @@ function Upgrade()
 		while($plugin = Fetch($rPlugins))
 		{
 			$plugin = str_replace(array('.','/','\\'), '', $plugin['plugin']);
-			$path = __DIR__."/../../plugins/$plugin/installSchema.php";
+			$path = __DIR__."/../plugins/$plugin/installSchema.php";
 			if(file_exists($path))
 				include($path);
 		}

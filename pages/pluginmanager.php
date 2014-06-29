@@ -14,7 +14,7 @@ if($_REQUEST['action'] == "enable")
 		Kill("No.");
 
 	Query("insert into {enabledplugins} values ({0})", $_REQUEST['id']);
-	require(BOARD_ROOT.'lib/dbupgrade.php');
+	require(BOARD_ROOT.'db/functions.php');
 	Upgrade();
 
 	die(header("location: ".actionLink("pluginmanager")));

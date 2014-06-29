@@ -149,11 +149,11 @@ $logSqlErrors = 0;
 	file_put_contents(__DIR__.'/config/kurikey.php', $kurifile);
 	
 	require(__DIR__.'/lib/mysql.php');
-	require(__DIR__.'/tools/lib/mysqlfunctions.php');
+	require(__DIR__.'/db/functions.php');
 	$debugMode = 1;
 	
 	Upgrade();
-	Import(__DIR__.'/database.sql');
+	Import(__DIR__.'/db/install.sql');
 	
 	$pss = Shake(16);
 	$sha = hash('sha256', $boardpassword.$salt.$pss, FALSE);
@@ -170,7 +170,7 @@ $logSqlErrors = 0;
 	<br>
 <?php
 	
-	unlink(__DIR__.'/database.sql');
+	unlink(__DIR__.'/db/install.sql');
 	unlink(__DIR__.'/install.php');
 }
 else

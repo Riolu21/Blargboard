@@ -65,9 +65,8 @@ include(__DIR__."/settingssystem.php");
 Settings::load();
 Settings::checkPlugin("main");
 
-include(__DIR__."/feedback.php");
+include(__DIR__."/functions.php");
 include(__DIR__."/language.php");
-include(__DIR__."/snippets.php");
 include(__DIR__."/links.php");
 
 class KillException extends Exception { }
