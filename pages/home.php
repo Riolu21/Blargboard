@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $viewableforums = ForumsWithPermission('forum.viewforum');
 	
@@ -30,7 +31,7 @@ while ($lp = Fetch($lastposts))
 	$lastActivity[$lp['t_lastpostdate']] = array('description' => $desc, 'formattedDate' => $fmtdate);
 }
 
-$bucket = 'lastactivity'; include('lib/pluginloader.php');
+$bucket = 'lastactivity'; include(BOARD_ROOT.'lib/pluginloader.php');
 
 krsort($lastActivity);
 $lastActivity = array_slice($lastActivity, 0, $maxitems);

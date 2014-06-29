@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Posts by user viewer
 //  Access: all
+if (!defined('BLARG')) die();
 
 if(!isset($_GET['id']))
 	Kill(__("User ID unspecified."));

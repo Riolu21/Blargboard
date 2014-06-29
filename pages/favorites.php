@@ -1,6 +1,7 @@
 <?php
 // favorites page
 // forum.php copypasta
+if (!defined('BLARG')) die();
 
 if (!$loguserid)
 	Kill(__("You must be logged in to use this feature."));

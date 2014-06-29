@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Report/content mismatch fixing utility
 //  Access: staff
+if (!defined('BLARG')) die();
 
 if(!$loguser['root'])
 		Kill(__("Staff only, please."));
@@ -103,6 +104,6 @@ while($forum = Fetch($rForum))
 }
 reportFix(__("Updating threads last posts&hellip;"));
 
-$bucket = "recalc"; include("./lib/pluginloader.php");
+$bucket = "recalc"; include(BOARD_ROOT."lib/pluginloader.php");
 print "<br />All done!<br />";
 

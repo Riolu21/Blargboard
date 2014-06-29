@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 if(!$loguser['root'])
 	Kill(__("You're not an administrator. There is nothing for you here."));

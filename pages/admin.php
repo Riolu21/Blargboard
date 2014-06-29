@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Administration hub page
 //  Access: administrators
+if (!defined('BLARG')) die();
 
 
 CheckPermission('admin.viewadminpanel');
@@ -41,7 +42,7 @@ if (HasPermission('admin.viewlog'))			$adminLinks[] = actionLinkTag(__("View log
 if (HasPermission('admin.ipsearch'))		$adminLinks[] = actionLinkTag(__('Rereg radar'), 'reregs');
 
 
-$bucket = "adminpanel"; include("./lib/pluginloader.php");
+$bucket = "adminpanel"; include(BOARD_ROOT."lib/pluginloader.php");
 
 
 RenderTemplate('adminpanel', array('adminInfo' => $adminInfo, 'adminLinks' => $adminLinks));

@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 //Category/forum editor -- By Nikolaj
 //Secured and improved by Dirbaio

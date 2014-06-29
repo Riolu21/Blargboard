@@ -1,8 +1,9 @@
 <?php
 //  AcmlmBoard XD - Post editing page
 //  Access: users
+if (!defined('BLARG')) die();
 
-require('lib/upload.php');
+require(BOARD_ROOT.'lib/upload.php');
 
 $title = __("Edit post");
 
@@ -147,7 +148,7 @@ else if(isset($_POST['actionpost']))
 
 	if(!$rejected)
 	{
-		$bucket = "checkPost"; include("./lib/pluginloader.php");
+		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 	}
 
 	if(!$rejected)
@@ -183,7 +184,7 @@ else if(isset($_POST['actionpost']))
 		Query("UPDATE {posts} SET has_attachments={0} WHERE id={1}", (!empty($attachs))?1:0, $pid);
 
 		Report("Post edited by [b]".$loguser['name']."[/] in [b]".$thread['title']."[/] (".$forum['title'].") -> [g]#HERE#?pid=".$pid, $isHidden);
-		$bucket = 'editpost'; include("lib/pluginloader.php");
+		$bucket = 'editpost'; include(BOARD_ROOT."lib/pluginloader.php");
 
 		die(header("Location: ".actionLink("post", $pid)));
 	}

@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - User profile page
 //  Access: all
+if (!defined('BLARG')) die();
 
 $id = (int)$_REQUEST['id'];
 
@@ -257,7 +258,7 @@ if(NumRows($badgersR))
 }
 
 
-$bucket = "profileTable"; include("./lib/pluginloader.php");
+$bucket = "profileTable"; include(BOARD_ROOT."lib/pluginloader.php");
 
 
 

@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Thread listing page
 //  Access: all
+if (!defined('BLARG')) die();
 
 if(!isset($_GET['id']))
 	Kill(__("Forum ID unspecified."));

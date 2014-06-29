@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Private message inbox/outbox viewer
 //  Access: users
+if (!defined('BLARG')) die();
 
 $title = __("Private messages");
 

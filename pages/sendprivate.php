@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Private message sending/previewing page
 //  Access: user
+if (!defined('BLARG')) die();
 
 $title = __("Private messages");
 
@@ -145,7 +146,7 @@ if($_POST['actionsend'] || $_POST['actionsave'])
 		{
 			$wantDraft = ($_POST['actionsave'] ? 1:0);
 
-			$bucket = "checkPost"; include("./lib/pluginloader.php");
+			$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 
 			$post = $_POST['text'];
 			$post = preg_replace("'/me '","[b]* ".htmlspecialchars($loguser['name'])."[/b] ", $post); //to prevent identity confusion

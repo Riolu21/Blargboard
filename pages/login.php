@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Login page
 //  Access: guests
+if (!defined('BLARG')) die();
 
 if($_POST['action'] == "logout")
 {
@@ -25,7 +26,7 @@ elseif(isset($_POST['actionlogin']))
 	
 	// auth plugins
 	if (!$okay)
-		{ $bucket = 'login'; include('lib/pluginloader.php'); }
+		{ $bucket = 'login'; include(BOARD_ROOT.'lib/pluginloader.php'); }
 
 	if(!$okay)
 	{

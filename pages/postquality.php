@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $title = 'Post quality stats';
 MakeCrumbs(array(actionLink('postquality') => 'Post quality stats'));

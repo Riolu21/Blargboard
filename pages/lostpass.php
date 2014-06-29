@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 if(Settings::get("mailResetSender") == "")
 	Kill(__("No sender specified for reset emails."));

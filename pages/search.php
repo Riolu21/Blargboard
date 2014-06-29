@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 define('CACHE_TIME', 3600);
 

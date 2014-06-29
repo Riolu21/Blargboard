@@ -1,8 +1,9 @@
 <?php
 //  AcmlmBoard XD - User account registration page
 //  Access: any, but meant for guests.
+if (!defined('BLARG')) die();
 
-require('config/kurikey.php');
+require(BOARD_ROOT.'config/kurikey.php');
 
 
 $title = __("Register");
@@ -104,7 +105,7 @@ if($_POST['register'])
 		$user = Fetch(Query("select * from {users} where id={0}", $uid));
 		$user['rawpass'] = $_POST['pass'];
 
-		$bucket = "newuser"; include("lib/pluginloader.php");
+		$bucket = "newuser"; include(BOARD_ROOT."lib/pluginloader.php");
 		
 		
 		$rLogUser = Query("select id, pss, password from {users} where 1");

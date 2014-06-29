@@ -15,7 +15,7 @@ if($loguserid)
 	$userMenu[actionLink('private')] = __('Private messages');
 	$userMenu[actionLink('favorites')] = __('Favorites');
 
-	$bucket = 'userMenu'; include("./lib/pluginloader.php");
+	$bucket = 'userMenu'; include(__DIR__."/../lib/pluginloader.php");
 }
 
 $layout_userpanel = $userMenu;

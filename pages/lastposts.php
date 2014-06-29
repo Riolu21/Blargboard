@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $title = __("Last posts");
 MakeCrumbs(array(actionLink("lastposts") => __("Last posts")));

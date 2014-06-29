@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $title = "Plugin Manager";
 

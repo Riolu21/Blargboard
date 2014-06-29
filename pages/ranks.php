@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $title = __("Ranks");
 MakeCrumbs(array(actionLink("ranks") => __("Ranks")));

@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Realtime visitor statistics page
 //  Access: all
+if (!defined('BLARG')) die();
 
 $title = __("Online users");
 MakeCrumbs(array(actionLink("online") => __("Online users")));

@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Thread editing page
 //  Access: moderators
+if (!defined('BLARG')) die();
 
 $title = __("Edit thread");
 

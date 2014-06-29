@@ -1,8 +1,9 @@
 <?php
 //  AcmlmBoard XD - Reply submission/preview page
 //  Access: users
+if (!defined('BLARG')) die();
 
-require('lib/upload.php');
+require(BOARD_ROOT.'lib/upload.php');
 
 $title = __("New reply");
 
@@ -132,7 +133,7 @@ else if(isset($_POST['actionpost']))
 
 	if(!$rejected)
 	{
-		$bucket = "checkPost"; include("./lib/pluginloader.php");
+		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 	}
 
 	if(!$rejected)
@@ -182,7 +183,7 @@ else if(isset($_POST['actionpost']))
 
 		Report("New reply by [b]".$loguser['name']."[/] in [b]".$thread['title']."[/] (".$forum['title'].") -> [g]#HERE#?pid=".$pid, $isHidden);
 
-		$bucket = "newreply"; include("lib/pluginloader.php");
+		$bucket = "newreply"; include(BOARD_ROOT."lib/pluginloader.php");
 
 		die(header("Location: ".actionLink("post", $pid)));
 	}

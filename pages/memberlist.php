@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Member list page
 //  Access: all
+if (!defined('BLARG')) die();
 
 
 $title = __("Member list");

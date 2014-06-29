@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Thread display page
 //  Access: all
+if (!defined('BLARG')) die();
 
 
 if(isset($_GET['pid']))

@@ -1,8 +1,9 @@
 <?php
 //  AcmlmBoard XD - Thread submission/preview page
 //  Access: users
+if (!defined('BLARG')) die();
 
-require('lib/upload.php');
+require(BOARD_ROOT.'lib/upload.php');
 
 $title = __("New thread");
 
@@ -182,7 +183,7 @@ else if(isset($_POST['actionpost']))
 
 	if(!$rejected)
 	{
-		$bucket = "checkPost"; include("./lib/pluginloader.php");
+		$bucket = "checkPost"; include(BOARD_ROOT."lib/pluginloader.php");
 	}
 
 	if(!$rejected)
@@ -253,7 +254,7 @@ else if(isset($_POST['actionpost']))
 		$postingAsUser = $loguser;
 		$thread['title'] = $_POST['title'];
 		$thread['id'] = $tid;
-		$bucket = "newthread"; include("lib/pluginloader.php");
+		$bucket = "newthread"; include(BOARD_ROOT."lib/pluginloader.php");
 
 		die(header("Location: ".actionLink("thread", $tid)));
 	}

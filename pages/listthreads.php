@@ -1,4 +1,6 @@
 <?php
+if (!defined('BLARG')) die();
+
 $uid = (int)$_GET['id'];
 
 $rUser = Query("select * from {users} where id={0}", $uid);

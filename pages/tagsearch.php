@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $viewableforums = ForumsWithPermission('forum.viewforum');
 

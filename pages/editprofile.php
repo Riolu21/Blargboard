@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 //Check Stuff
 if(!$loguserid)
@@ -201,7 +202,7 @@ AddField('theme', 'theme', 'theme', '', 'themeselector');
 
 
 //Allow plugins to add their own fields
-$bucket = "editprofile"; include("lib/pluginloader.php");
+$bucket = "editprofile"; include(BOARD_ROOT."lib/pluginloader.php");
 
 
 $_POST['actionsave'] = (isset($_POST['actionsave']) ? $_POST['actionsave'] : '');

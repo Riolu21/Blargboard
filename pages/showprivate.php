@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Private message display page
-//  Access: user, specifically the sender or reciever.
+//  Access: user, specifically the sender or receiver.
+if (!defined('BLARG')) die();
 
 $title = __("Private messages");
 

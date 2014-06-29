@@ -1,4 +1,5 @@
 <?php
+if (!defined('BLARG')) die();
 
 $board = $_GET['id'];
 if (!$board) $board = '';

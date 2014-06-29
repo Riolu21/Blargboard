@@ -1,6 +1,7 @@
 <?php
 //  AcmlmBoard XD - Board Settings editing page
 //  Access: administrators
+if (!defined('BLARG')) die();
 
 $title = __("Edit settings");
 
