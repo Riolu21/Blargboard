@@ -616,6 +616,7 @@ function replacePost(id, opened)
 	$.get(boardroot+"ajaxcallbacks.php?a=rp"+(opened ? "&o":"")+"&id="+id, function(data)
 	{
 		$("#post"+id).replaceWith(data);
+		$("#post"+id+" .spoilerbutton").click(toggleSpoiler);
 	});
 }
 
@@ -641,6 +642,7 @@ function searchThemes(query) {
 	}
 }
 
-$(document).ready(function() {
+$(document).ready(function() 
+{
 	$(".spoilerbutton").click(toggleSpoiler);
 });
