@@ -170,7 +170,7 @@ function parseBBCode($text)
 	global $TagList, $TagAllowedIn;
 	$spacechars = array(' ', "\t", "\r", "\n", "\f");
 	
-	$raw = preg_split("@([\[<]/?[a-zA-Z][^\s\f/>\]]*)@", $text, 0, PREG_SPLIT_DELIM_CAPTURE);
+	$raw = preg_split("@(</?[a-zA-Z][^\s\f/>]*|\[/?[a-zA-Z][a-zA-Z0-9]*)@", $text, 0, PREG_SPLIT_DELIM_CAPTURE);
 	$outputstack = array(0 => array('tag' => '', 'attribs' => '', 'contents' => ''));
 	$si = 0;
 	
