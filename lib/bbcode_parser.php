@@ -169,6 +169,7 @@ function parseBBCode($text)
 {
 	global $TagList, $TagAllowedIn;
 	$spacechars = array(' ', "\t", "\r", "\n", "\f");
+	$attrib_bad = array(' ', "\t", "\r", "\n", "\f", '<', '[', '/', '=');
 	
 	$raw = preg_split("@(</?[a-zA-Z][^\s\f/>]*|\[/?[a-zA-Z][a-zA-Z0-9]*)@", $text, 0, PREG_SPLIT_DELIM_CAPTURE);
 	$outputstack = array(0 => array('tag' => '', 'attribs' => '', 'contents' => ''));
@@ -197,7 +198,8 @@ function parseBBCode($text)
 			}
 			
 			// invalid tag -- output it escaped
-			if (!array_key_exists($tagname, $TagList))
+			$test = trim($raw[$i]);
+			if (!array_key_exists($tagname, $TagList) || $test[0] == '<' || $test[0] == '[')
 			{
 				$outputstack[$si]['contents'] .= filterText(htmlspecialchars($rawcur), $currenttag, $currentmask);
 				continue;
@@ -210,13 +212,14 @@ function parseBBCode($text)
 			
 			$j = 0;
 			$endfound = false;
-			$inquote = false; $inattrib = false;
+			$inquote = false; $inattrib = ($cur[0]=='<')?0:1;
 			for (;;)
 			{
 				$nlen = strlen($next);
 				for (; $j < $nlen; $j++)
 				{
 					$ch = $next[$j];
+					$isspace = in_array($ch, $spacechars);
 					
 					if (!$inquote)
 					{
@@ -226,11 +229,18 @@ function parseBBCode($text)
 							break;
 						}
 						
-						if ($ch == '=')
-							$inattrib = true;
-						else if ($inattrib)
+						if ($inattrib == 0 && !in_array($ch, $attrib_bad))
+							$inattrib = 1;
+						else if ($inattrib == 1)
 						{
-							if (in_array($ch, $spacechars))
+							if ($ch == '=')
+								$inattrib = 2;
+							else if (!$isspace)
+								$inattrib = 0;
+						}
+						else if ($inattrib == 2)
+						{
+							if ($isspace)
 								continue;
 							
 							if ($ch == '"' || $ch == '\'')
@@ -240,10 +250,10 @@ function parseBBCode($text)
 						}
 					}
 					else if ($ch == $inquote || 
-						($inquote == ' ' && in_array($ch, $spacechars)))
+						($inquote == ' ' && $isspace))
 					{
 						$inquote = false;
-						$inattrib = false;
+						$inattrib = 0;
 					}
 					else if ($inquote == ' ' && $ch == $closechar)
 					{
