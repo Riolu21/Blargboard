@@ -11,8 +11,7 @@ define('TAG_SELFCLOSING',	0x0004);	// self-closing (br, img, ...)
 define('TAG_CLOSEOPTIONAL',	0x0008);	// closing tag optional (tr, td, li, p, ...)
 define('TAG_RAWCONTENTS',	0x0010);	// tag whose contents shouldn't be parsed (<style>)
 define('TAG_NOAUTOLINK',	0x0020);	// prevent autolinking 
-define('TAG_NOFORMAT',		0x0040);	// no formatting (code, etc)
-define('TAG_NOBR',			0x0080);	// no conversion of linebreaks to <br> (pre)
+define('TAG_NOBR',			0x0040);	// no conversion of linebreaks to <br> (pre)
 
 $TagList = array
 (
@@ -89,7 +88,7 @@ $TagList = array
 	'[reply'	=>	TAG_GOOD | TAG_BLOCK,
 	
 	'[spoiler' 	=>	TAG_GOOD | TAG_BLOCK,
-	'[code'		=>	TAG_GOOD | TAG_BLOCK | TAG_NOFORMAT,
+	'[code'		=>	TAG_GOOD | TAG_BLOCK | TAG_RAWCONTENTS,
 	
 	'[table'	=> 	TAG_GOOD | TAG_BLOCK,
 	'[tr'		=> 	TAG_GOOD | TAG_BLOCK | TAG_CLOSEOPTIONAL,
@@ -148,9 +147,9 @@ function filterText($s, $parentTag, $parentMask)
 	
 	if ($parentMask & TAG_RAWCONTENTS) return $s;
 	
-	// place for some potential formatting that would distinguish RAWCONTENTS and NOFORMAT
-	
-	if ($parentMask & TAG_NOFORMAT) return $s;
+	// prevent unwanted shit
+	$s = str_replace(array('<', '>'), array('&lt;', '&gt;'), $s);
+	//$s = preg_replace('@&([a-z0-9]*[^a-z0-9;])@', '&amp;$1', $s);
 	
 	if (!($parentMask & TAG_NOBR)) $s = nl2br($s);
 	$s = postDoReplaceText($s, $parentTag, $parentMask);
@@ -169,9 +168,9 @@ function tagAllowedIn($curtag, $parenttag)
 function parseBBCode($text)
 {
 	global $TagList, $TagAllowedIn;
-	$spacechars = array(' ', "\t", "\r", "\n");
+	$spacechars = array(' ', "\t", "\r", "\n", "\f");
 	
-	$raw = preg_split('@([\[<]/?[a-zA-Z][a-zA-Z0-9]*)@', $text, 0, PREG_SPLIT_DELIM_CAPTURE);
+	$raw = preg_split("@([\[<]/?[a-zA-Z][^\s\f/>\]]*)@", $text, 0, PREG_SPLIT_DELIM_CAPTURE);
 	$outputstack = array(0 => array('tag' => '', 'attribs' => '', 'contents' => ''));
 	$si = 0;
 	
@@ -191,7 +190,7 @@ function parseBBCode($text)
 			
 			// raw contents tags (<style> & co)
 			// continue outputting RAW content until we meet a matching closing tag
-			if (($currentmask & (TAG_RAWCONTENTS|TAG_NOFORMAT)) && (!$isclosing || $currenttag != $tagname))
+			if (($currentmask & TAG_RAWCONTENTS) && (!$isclosing || $currenttag != $tagname))
 			{
 				$outputstack[$si]['contents'] .= $rawcur;
 				continue;
