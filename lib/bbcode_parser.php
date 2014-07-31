@@ -18,6 +18,8 @@ $TagList = array
 	// HTML
 	
 	'<a'		=>	TAG_GOOD | TAG_NOAUTOLINK,
+	'<abbr' 	=>  TAG_GOOD,
+	'<acronym'  =>  TAG_GOOD,
 	'<b'		=>	TAG_GOOD,
 	'<big'		=>	TAG_GOOD,
 	'<br'		=>	TAG_GOOD | TAG_SELFCLOSING,
@@ -68,6 +70,8 @@ $TagList = array
 	'<wbr' 		=>	TAG_GOOD | TAG_SELFCLOSING,
 	
 	'<audio'	=>	TAG_GOOD,
+	'<video'	=>  TAG_GOOD,
+	'<source'	=>  TAG_GOOD | TAG_SELFCLOSING,
 	
 	// BBCode
 	
