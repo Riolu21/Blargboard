@@ -1,5 +1,5 @@
 <?php
-//  AcmlmBoard XD - 404
+//  Blargboard - 404
 //  Access: all
 if (!defined('BLARG')) die();
 
@@ -11,6 +11,6 @@ $title = __("404 - Not found");
 
 //echo $_SERVER['REQUEST_URI'].' -- '.$_SERVER['SCRIPT_NAME'].'?'.$_SERVER['QUERY_STRING'];
 
-Kill(__('The page you are looking for was not found.').'<br /><br />
+Kill(__('Sorry! The page you are looking for was not found.').'<br /><br />
 	<a href=".">'.__('Return to the board index').'</a>', __("404 - Not found"));
 ?>
