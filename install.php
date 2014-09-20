@@ -1,18 +1,18 @@
 <!doctype html>
 <html>
 <head>
-<title>Blargboard install</title>
+<title>Blargboard installation</title>
 <style type="text/css">
-a:link { color: #0e5; }
-a:visited { color: #0e5; }
-a:hover, a:active { color: #bfb; }
+a:link { color: blue; }
+a:visited { color: blue; }
+a:hover, a:active { color: white; }
 
 html, body { width: 100%; height: 100%; }
 
 body
 {
 	font: 12pt 'Arial', 'Helvetica', sans-serif;
-	background: #222;
+	background: #3B446F;
 	margin: 0;
 	padding: 0;
 	text-align: center;
@@ -21,7 +21,7 @@ body
 
 #container
 {
-	background: #032;
+	background: #2E45AF;
 	min-height: 100%;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -62,7 +62,7 @@ table
 
 td:not([colspan='2'])
 {
-	border-bottom: 1px solid #043;
+	border-bottom: 1px solid #002ECF;
 }
 </style>
 </head>
